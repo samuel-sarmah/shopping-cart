@@ -42,7 +42,7 @@ function Products({ cart, placeInCart}) {
     }
 
     const addToCart = (product) => {
-        setCart((prevCart) => {
+        setCartProducts((prevCart) => {
             // If product already exists, increase quantity
             if (prevCart[product.id]) {
                 return {
@@ -102,7 +102,7 @@ function Products({ cart, placeInCart}) {
                         <p>Price: ${product.price}</p>
                         <p>Rating: {product.rating}</p>
                         <button
-                            onClick={() => addToCartProduc(product)}
+                            onClick={() => addToCart(product)}
                             disabled={isInCart(product.id)}
                         >
                             {isInCart(product.id) ? 'In Cart' : 'Add to Cart'}
