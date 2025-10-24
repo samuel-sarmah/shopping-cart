@@ -32,7 +32,9 @@ export default function Header({ cartItemsCount }) {
                     Eesto shoppers
                 </h1>
                 <div>
-                    <CartWidget productsCount={cartItemsCount || 0} />
+                    <Link to="cart">
+                        <CartWidget productsCount={cartItemsCount || 0} />
+                    </Link>
                 </div>
             </div>
             

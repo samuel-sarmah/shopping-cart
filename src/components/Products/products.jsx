@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import useLocalStorageState from "use-local-storage-state";
 import classes from './products.module.scss'
+import Header from "../Header/Header";
 
 const API_URL = 'https://dummyjson.com/products';
 
-function Products({ cart, addToCart}) {
+function Products({ cart, placeInCart}) {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null)
-    const [searchTerm, setSearchTerm] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState('');
+
+    // Cart state persisted in localStorage
+    const [cartProducts, setCartProducts] = useLocalStorageState('shopping-cart', { defaultValue: {}});
 
     useEffect(() => {
         fetchData(API_URL)            
@@ -36,11 +38,60 @@ function Products({ cart, addToCart}) {
     if (error) return <h3 className={classes.error}>A network error was encountered!</h3>
 
     const isInCart = (productId) => {
-        return cart && cart[productId]
+        return cartProducts && cartProducts[productId]
     }
+
+    const addToCart = (product) => {
+        setCart((prevCart) => {
+            // If product already exists, increase quantity
+            if (prevCart[product.id]) {
+                return {
+                    ...prevCart,
+                    [product.id] : {
+                        ...prevCart[product.id],
+                        quantity:prevCart[product.id].quantity + 1
+                    }
+                };
+            }
+            // If new product, increase quantity by 1
+            return {
+                ...prevCart,
+                [product.id] : { ...product, quantity : 1}
+            };
+        });
+    };
+
+    const removeFromCart = (productId) => {
+        setCart((prevCart) => {
+            const newCart = { ...prevCart };
+            delete newCart[productId]
+            return newCart;
+        });
+    };
+
+    const updateQuantity = (productId, newQuantity) => {
+        if (newQuantity <= 0) {
+            removeFromCart(productId);
+            return;
+        }
+        setCart((prevCart) => ({
+            ...prevCart,
+            [productId]: {
+                ...prevCart[productId],
+                quantity: newQuantity
+            }
+        }));
+    }
+
+    // calculate total items in cart
+    const cartItemsCount = Object.values(cartProducts).reduce(
+        (total, item) => total + item.quantity,
+        0
+    );
 
     return (
         <section className={classes.productPage}> 
+            <Header cartItemsCount={cartItemsCount} />
             <h1>Products</h1>
 
             <div className={classes.container}>
@@ -48,9 +99,10 @@ function Products({ cart, addToCart}) {
                     <div className={classes.product} key={product.id}>
                         <img src={product.thumbnail} alt={product.title} />
                         <h3>{product.title}</h3>
-                        <p>Price: </p>
+                        <p>Price: ${product.price}</p>
+                        <p>Rating: {product.rating}</p>
                         <button
-                            onClick={() => addToCart(product)}
+                            onClick={() => addToCartProduc(product)}
                             disabled={isInCart(product.id)}
                         >
                             {isInCart(product.id) ? 'In Cart' : 'Add to Cart'}
