@@ -38,7 +38,7 @@
                     cursor: pointer;
                 }
 
-                &:disabled {
+                &.productInCart {
                     opacity: .4;
                     background-color: lightgray;
                 }

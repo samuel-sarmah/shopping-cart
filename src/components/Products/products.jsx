@@ -5,7 +5,7 @@ import Header from "../Header/Header";
 
 const API_URL = 'https://dummyjson.com/products';
 
-function Products({ cart, placeInCart}) {
+function Products({ }) {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null)
@@ -62,7 +62,7 @@ function Products({ cart, placeInCart}) {
     };
 
     const removeFromCart = (productId) => {
-        setCart((prevCart) => {
+        setCartProducts((prevCart) => {
             const newCart = { ...prevCart };
             delete newCart[productId]
             return newCart;
@@ -103,7 +103,6 @@ function Products({ cart, placeInCart}) {
                         <p>Rating: {product.rating}</p>
                         <button
                             onClick={() => addToCart(product)}
-                            disabled={isInCart(product.id)}
                         >
                             {isInCart(product.id) ? 'In Cart' : 'Add to Cart'}
                         </button>
