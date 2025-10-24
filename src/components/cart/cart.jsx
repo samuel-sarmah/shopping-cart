@@ -1,11 +1,16 @@
-import { Link, redirect } from "react-router"
+import { useNavigate } from "react-router"
 
 const Cart = () => {
+    const navigate = useNavigate()
+
+    const navigateToProducts = () => {
+        navigate('/shop')
+    }
 
     return (
         <>
             <h1>This is where the cart will be displayed</h1>
-            <a href="/shop">View products again!</a>
+            <button onClick={navigateToProducts}>Back to products</button>
         </>
     )
 }
