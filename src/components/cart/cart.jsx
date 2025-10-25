@@ -25,7 +25,7 @@ const Cart = () => {
                             <img src={item.thumbnail} alt={item.title} />
                             <h3>{item.title}</h3> 
                             <p>Price: ${item.price}</p>&ensp;
-                            <p>Quantity: {item.quantity}</p>&ensp;
+                            <p>Quantity: <button className={classes.qtyRmv}>-</button>{item.quantity}<button className={classes.qty}>+</button></p>&ensp;
                             <p>Subtotal: ${(item.price * item.quantity).toFixed(2)}</p>
                         </div>
                     ))

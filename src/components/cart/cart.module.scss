@@ -71,5 +71,19 @@
             background-color: rgb(136, 64, 169);
             color: white;
         }
+
+        .qty, .qtyRmv {
+            background-color: #3fcb14;
+            margin: 1rem;
+            width: 3rem;
+            font-size: 1.1em;
+            border-radius: 25px;
+            padding: .2rem;
+        }
+
+        .qtyRmv {
+            background-color: red;
+            color: white;
+        }
     }
 }

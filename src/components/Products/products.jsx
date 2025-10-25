@@ -92,7 +92,6 @@ function Products({ }) {
     return (
         <section className={classes.productPage}> 
             <Header cartItemsCount={cartItemsCount} />
-            <h1>Products</h1>
 
             <div className={classes.container}>
                 {products.map(product => (
