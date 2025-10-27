@@ -8,6 +8,7 @@ import './index.css'
 const App = lazy(() => import('./App.jsx'))
 const Products = lazy(() => import('./components/Products/products.jsx'))
 const Cart = lazy(() => import('./components/cart/cart.jsx'))
+const PayWall = lazy(() => import('./components/PayWallMock/PayWall.jsx'))
 const NotFound = lazy(() => import('./components/ErrorPage/NotFound.jsx'))
 
 const router = createBrowserRouter([
@@ -42,6 +43,19 @@ const router = createBrowserRouter([
     element: (
       <Suspense fallback={<Loader />}>
         <Cart />
+      </Suspense>
+    ),
+    errorElement: (
+      <Suspense fallback={<Loader />}>
+        <NotFound />
+      </Suspense>
+    )
+  },
+  {
+    path: "checkout",
+    element: (
+      <Suspense fallback={<Loader />}>
+        <PayWall />
       </Suspense>
     ),
     errorElement: (

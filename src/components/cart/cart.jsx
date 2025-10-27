@@ -13,6 +13,10 @@ const Cart = () => {
         navigate('/shop')
     }
 
+    const navigateToCheckout = () => {
+        navigate('/checkout')
+    }
+
     const increaseQuantity = (product) => {
         setCartProducts((prevCart) => ({
             ...prevCart,
@@ -80,7 +84,7 @@ const Cart = () => {
                 </div>
                 <div className={classes.cta}>
                     <button onClick={navigateToProducts} className={classes.back}>Back to products</button>
-                    <button >Proceed to checkout</button>
+                    <button onClick={navigateToCheckout}>Proceed to checkout</button>
                 </div>
             </div>
         </section>
