@@ -84,8 +84,19 @@ const Cart = () => {
                 </div>
                 <div className={classes.cta}>
                     <button onClick={navigateToProducts} className={classes.back}>Back to products</button>
-                    <button onClick={navigateToCheckout}>Proceed to checkout</button>
+                    <button 
+                        onClick={navigateToCheckout}
+                        disabled={cartItems.length === 0}
+                        className={cartItems.length === 0 ? classes.disabled : ''}
+                    >
+                        Proceed to checkout
+                    </button>
                 </div>
+                {cartItems.length === 0 && (
+                    <p className={classes.checkoutWarning}>
+                        ⚠️ Add items to your cart before proceeding to checkout
+                    </p>
+                )}
             </div>
         </section>
     )
