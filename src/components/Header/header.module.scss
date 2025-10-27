@@ -30,13 +30,79 @@
         height: 80px;
 
         .logo {
-            height: 4rem;
+            height: 6rem;
             transition: height 200ms ease-in;
+        }
+
+        h1 {
+            font-size: 1rem;
         }
     }
 
     h1 {
         font-family: sans-serif;
         color: white;
+        line-height: 2rem;
+        padding: 0 1rem;
+        margin: 0;
+        flex: 1;
+        text-align: center;
+        font-size: clamp(1rem, 3vw, 1.5rem);
+    }
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+    .header {
+        height: 80px;
+        padding: 0 0.5rem;
+
+        .logo {
+            height: 3.5em;
+            padding: 0.5em;
+        }
+
+        h1 {
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            line-height: 1.2rem;
+            padding: 0 0.5rem;
+        }
+
+        &.shrink {
+            height: 60px;
+
+            .logo {
+                height: 3rem;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        height: 70px;
+
+        .logo {
+            height: 3em;
+            padding: 0.3em;
+        }
+
+        h1 {
+            font-size: 0.75rem;
+            line-height: 1rem;
+            padding: 0 0.25rem;
+        }
+
+        &.shrink {
+            height: 55px;
+
+            .logo {
+                height: 2.5rem;
+            }
+
+            h1 {
+                font-size: 0.7rem;
+            }
+        }
     }
 }

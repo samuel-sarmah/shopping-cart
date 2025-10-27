@@ -31,7 +31,7 @@ export default function Header({ cartItemsCount }) {
                 <h1>
                     Look ma, we've got all the products!
                 </h1>
-                <div>
+                <div className={classes.cartSection}>
                     <div>
                         <CartWidget productsCount={cartItemsCount || 0} />
                     </div>
