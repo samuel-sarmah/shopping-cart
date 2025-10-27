@@ -15,7 +15,7 @@ const Cart = () => {
 
     return (
         <section className={classes.cart}>
-            <h1>Shopping Cart</h1>
+            <h1>Your Shopping Cart</h1>
             <div className={classes.container}>
                 {cartItems.length === 0 ? (
                     <p>You cart is empty! Add a product to it!</p>
@@ -24,9 +24,11 @@ const Cart = () => {
                         <div key={item.id} className={classes.product}>
                             <img src={item.thumbnail} alt={item.title} />
                             <h3>{item.title}</h3> 
-                            <p>Price: ${item.price}</p>&ensp;
-                            <p>Quantity: <button className={classes.qtyRmv}>-</button>{item.quantity}<button className={classes.qty}>+</button></p>&ensp;
-                            <p>Subtotal: ${(item.price * item.quantity).toFixed(2)}</p>
+                            <div className={classes.productCalc}>
+                                <p><b>Price:</b> ${item.price}</p>&ensp;
+                                <p><b>Quantity:</b><button className={classes.qtyRmv}>-</button>{item.quantity}<button className={classes.qty}>+</button></p>&ensp;
+                                <p><b>Subtotal:</b> ${(item.price * item.quantity).toFixed(2)}</p>
+                            </div>
                         </div>
                     ))
                 )}
