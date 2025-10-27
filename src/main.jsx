@@ -44,6 +44,11 @@ const router = createBrowserRouter([
         <Cart />
       </Suspense>
     ),
+    errorElement: (
+      <Suspense fallback={<Loader />}>
+        <NotFound />
+      </Suspense>
+    )
   },
 ])
 

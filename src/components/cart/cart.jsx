@@ -3,7 +3,7 @@ import useLocalStorageState from "use-local-storage-state"
 import classes from "./cart.module.scss"
 
 const Cart = () => {
-    const [cartProducts] = useLocalStorageState('shopping-cart', {
+    const [cartProducts, setCartProducts] = useLocalStorageState('shopping-cart', {
         defaultValue: {}
     })
     const cartItems = Object.values(cartProducts);
@@ -12,6 +12,38 @@ const Cart = () => {
     const navigateToProducts = () => {
         navigate('/shop')
     }
+
+    const increaseQuantity = (product) => {
+        setCartProducts((prevCart) => ({
+            ...prevCart,
+            [product.id]: {
+                ...product,
+                quantity: product.quantity + 1
+            }
+        }));
+    };
+
+    const decreaseQuantity = (product) => {
+        if (product.quantity <= 1) {
+            removeFromCart(product.id);
+            return;
+        }
+        setCartProducts((prevCart) => ({
+            ...prevCart,
+            [product.id]: {
+                ...product,
+                quantity: product.quantity - 1
+            }
+        }));
+    };
+
+    const removeFromCart = (productId) => {
+        setCartProducts((prevCart) => {
+            const newCart = { ...prevCart };
+            delete newCart[productId];
+            return newCart;
+        });
+    };
 
     return (
         <section className={classes.cart}>
@@ -26,7 +58,12 @@ const Cart = () => {
                             <h3>{item.title}</h3> 
                             <div className={classes.productCalc}>
                                 <p><b>Price:</b> ${item.price}</p>&ensp;
-                                <p><b>Quantity:</b><button className={classes.qtyRmv}>-</button>{item.quantity}<button className={classes.qty}>+</button></p>&ensp;
+                                <p>
+                                    <b>Quantity:</b>
+                                    <button className={classes.qtyRmv} onClick={() => decreaseQuantity(item)}>-</button>
+                                    {item.quantity}
+                                    <button className={classes.qty} onClick={() => increaseQuantity(item)}>+</button>
+                                </p>&ensp;
                                 <p><b>Subtotal:</b> ${(item.price * item.quantity).toFixed(2)}</p>
                             </div>
                         </div>

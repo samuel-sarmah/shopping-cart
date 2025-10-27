@@ -62,28 +62,6 @@ function Products({ }) {
         });
     };
 
-    const removeFromCart = (productId) => {
-        setCartProducts((prevCart) => {
-            const newCart = { ...prevCart };
-            delete newCart[productId]
-            return newCart;
-        });
-    };
-
-    const updateQuantity = (productId, newQuantity) => {
-        if (newQuantity <= 0) {
-            removeFromCart(productId);
-            return;
-        }
-        setCart((prevCart) => ({
-            ...prevCart,
-            [productId]: {
-                ...prevCart[productId],
-                quantity: newQuantity
-            }
-        }));
-    }
-
     // calculate total items in cart
     const cartItemsCount = Object.values(cartProducts).reduce(
         (total, item) => total + item.quantity,
