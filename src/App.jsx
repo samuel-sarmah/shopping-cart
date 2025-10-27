@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { useState } from "react";
 import classes from "./App.module.scss";
-// Using online stock images for features 
+
 const featureImages = {
     fastDelivery: "https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=400&h=300&fit=crop&crop=center",
     quality: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop&crop=center",

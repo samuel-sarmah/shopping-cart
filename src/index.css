@@ -19,7 +19,6 @@ body {
   width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
-  background-color: #213547;
 }
 
 #root {
@@ -27,4 +26,5 @@ body {
   padding: 0;
   width: 100%;
   max-width: 100%;
+  font-size: 18px;
 }

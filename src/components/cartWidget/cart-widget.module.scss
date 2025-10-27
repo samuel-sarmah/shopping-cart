@@ -8,6 +8,7 @@
     align-items: center;
     flex-direction: row-reverse;
     justify-content: space-between;
+    font-size: 18px;
 
     &:hover {
         outline: 1px solid white;
@@ -15,9 +16,12 @@
 
     .shoppingCart{
         height: 3em;
-        padding: 1.5rem .4em;
+        padding: 1.5em .4em;
+        width: 100px;
+        height: 100px;
         will-change: filter;
         transition: filter 300ms;
+        color: white;
     }
 
     .productsCount {
