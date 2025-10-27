@@ -3,10 +3,101 @@
     margin-top: 8rem;
     font-family: sans-serif;
 
+    .searchSection {
+        max-width: 1200px;
+        margin: 0 auto 2rem;
+        padding: 1.5rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+        .searchBar {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+
+            .searchInput, .categorySelect {
+                flex: 1;
+                min-width: 200px;
+                padding: 0.875rem 1.25rem;
+                font-size: 1rem;
+                border: 2px solid #e5e7eb;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+                font-family: sans-serif;
+
+                &:focus {
+                    outline: none;
+                    border-color: #646cff;
+                    box-shadow: 0 0 0 3px rgba(100, 108, 255, 0.1);
+                }
+            }
+
+            .categorySelect {
+                flex: 0.5;
+                cursor: pointer;
+                background-color: white;
+            }
+        }
+
+        .resultsCount {
+            margin-top: 1rem;
+            color: #666;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+    }
+
     .container {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+
+        .noResults {
+            flex-basis: 100%;
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+            .noResultsIcon {
+                font-size: 4rem;
+                margin-bottom: 1rem;
+                opacity: 0.5;
+            }
+
+            h2 {
+                color: #213547;
+                font-size: 1.75rem;
+                margin: 0 0 1rem;
+            }
+
+            p {
+                color: #666;
+                font-size: 1.1rem;
+                line-height: 1.6;
+                margin: 0 0 2rem;
+            }
+
+            .resetButton {
+                background-color: #646cff;
+                color: white;
+                padding: 0.875rem 2rem;
+                font-size: 1rem;
+                font-weight: 600;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    background-color: #535bf2;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(100, 108, 255, 0.3);
+                }
+            }
+        }
 
         .product {
             flex-basis: 33.33%;
@@ -18,6 +109,14 @@
                 font-weight: 700;
                 line-height: 20px;
                 margin: 0;
+            }
+
+            .category {
+                color: #646cff;
+                font-size: 0.85rem;
+                font-weight: 500;
+                text-transform: capitalize;
+                margin: 0.25rem 0;
             }
 
             img {
@@ -56,6 +155,49 @@
             .product {
                 flex-basis: 100%;
                 
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .searchSection {
+            padding: 1rem;
+
+            .searchBar {
+                .searchInput, .categorySelect {
+                    min-width: 100%;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 430px) {
+        margin-top: 6rem;
+
+        .searchSection {
+            padding: 0.75rem;
+
+            .searchBar {
+                .searchInput, .categorySelect {
+                    padding: 0.75rem 1rem;
+                    font-size: 0.95rem;
+                }
+            }
+        }
+
+        .container .noResults {
+            padding: 3rem 1.5rem;
+
+            .noResultsIcon {
+                font-size: 3rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            p {
+                font-size: 1rem;
             }
         }
     }
