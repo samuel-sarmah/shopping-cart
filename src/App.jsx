@@ -11,6 +11,13 @@ const featureImages = {
     returns: "https://images.unsplash.com/photo-1580048915913-4f8f5cb481c4?w=400&h=300&fit=crop&crop=center"
 };
 
+const dealImages = {
+    electronics: "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=300&h=200&fit=crop",
+    beauty: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=300&h=200&fit=crop",
+    shipping: "https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=300&h=200&fit=crop",
+    flash: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=300&h=200&fit=crop"
+};
+
 function App() {
     const [email, setEmail] = useState("");
     const [subscribed, setSubscribed] = useState(false);
@@ -38,6 +45,99 @@ function App() {
                 <Link to="shop" className={classes.ctaButton}>
                     Start Shopping Now!
                 </Link>
+            </section>
+
+            {/* Hot Deals Banner */}
+            <section className={classes.dealsSection}>
+                <div className={classes.dealsContainer}>
+                    <div className={classes.dealsBadge}>
+                        <span className={classes.fire}>🔥</span>
+                        <span className={classes.badgeText}>HOT DEALS</span>
+                        <span className={classes.fire}>🔥</span>
+                    </div>
+                    <h2 className={classes.dealsTitle}>
+                        Limited Time Offers!
+                    </h2>
+                    <p className={classes.dealsSubtitle}>
+                        Don't miss out on incredible savings across all categories
+                    </p>
+                    
+                    <div className={classes.dealsGrid}>
+                        <div className={classes.dealCard}>
+                            <div className={classes.dealImage}>
+                                <img src={dealImages.electronics} alt="Electronics deals" />
+                                <div className={classes.dealOverlay}>
+                                    <div className={classes.dealIcon}></div>
+                                </div>
+                            </div>
+                            <div className={classes.dealContent}>
+                                <div className={classes.dealDiscount}>UP TO 50% OFF</div>
+                                <div className={classes.dealCategory}>Electronics</div>
+                            </div>
+                        </div>
+                        <div className={classes.dealCard}>
+                            <div className={classes.dealImage}>
+                                <img src={dealImages.beauty} alt="Beauty products" />
+                                <div className={classes.dealOverlay}>
+                                    <div className={classes.dealIcon}></div>
+                                </div>
+                            </div>
+                            <div className={classes.dealContent}>
+                                <div className={classes.dealDiscount}>BUY 2 GET 1</div>
+                                <div className={classes.dealCategory}>Beauty</div>
+                            </div>
+                        </div>
+                        <div className={classes.dealCard}>
+                            <div className={classes.dealImage}>
+                                <img src={dealImages.shipping} alt="Free shipping" />
+                                <div className={classes.dealOverlay}>
+                                    <div className={classes.dealIcon}></div>
+                                </div>
+                            </div>
+                            <div className={classes.dealContent}>
+                                <div className={classes.dealDiscount}>FREE SHIPPING</div>
+                                <div className={classes.dealCategory}>Orders $50+</div>
+                            </div>
+                        </div>
+                        <div className={classes.dealCard}>
+                            <div className={classes.dealImage}>
+                                <img src={dealImages.flash} alt="Flash sale" />
+                                <div className={classes.dealOverlay}>
+                                    <div className={classes.dealIcon}></div>
+                                </div>
+                            </div>
+                            <div className={classes.dealContent}>
+                                <div className={classes.dealDiscount}>FLASH SALE</div>
+                                <div className={classes.dealCategory}>Today Only</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <Link to="shop" className={classes.shopDealsButton}>
+                        <span>Shop All Deals Now</span>
+                        <span className={classes.arrow}>→</span>
+                    </Link>
+                    
+                    <div className={classes.countdown}>
+                        <span className={classes.countdownText}>⏰ Hurry! Deals end in:</span>
+                        <div className={classes.countdownTimer}>
+                            <div className={classes.timeBlock}>
+                                <span className={classes.timeNumber}>23</span>
+                                <span className={classes.timeLabel}>Hours</span>
+                            </div>
+                            <span className={classes.timeSeparator}>:</span>
+                            <div className={classes.timeBlock}>
+                                <span className={classes.timeNumber}>45</span>
+                                <span className={classes.timeLabel}>Mins</span>
+                            </div>
+                            <span className={classes.timeSeparator}>:</span>
+                            <div className={classes.timeBlock}>
+                                <span className={classes.timeNumber}>12</span>
+                                <span className={classes.timeLabel}>Secs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             {/* Features Section */}
