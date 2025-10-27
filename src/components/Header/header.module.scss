@@ -1,6 +1,7 @@
 .header {
     width: 100%;
     display: flex;
+    font-family: 'Times New Roman', Times, serif;
     height: 150px;
     align-items: center;
     background-color: #213547;
@@ -9,20 +10,19 @@
     right: 0;
     left: 0;
     top: 0;
-    opacity: 0.9;
-    backdrop-filter: saturate(180%) blur(20px);
     justify-content: space-between;
     z-index: 1;
+    will-change: height;
 
     .logo {
         height: 6em;
         padding: 1.5em;
         transition: height 200ms ease-in;
-        will-change: filter 300ms;
         transform: scaleX(-1);
+        will-change: height;
 
         &:hover {
-            filter: drop-shadow(0 0 2em #646cffaa);
+            filter: brightness(1.2);
         }
     }
 
@@ -33,5 +33,10 @@
             height: 4rem;
             transition: height 200ms ease-in;
         }
+    }
+
+    h1 {
+        font-family: sans-serif;
+        color: white;
     }
 }

@@ -29,7 +29,7 @@ export default function Header({ cartItemsCount }) {
                     </Link>
                 </div>
                 <h1>
-                    Eesto shoppers
+                    Look ma, we've got all the products!
                 </h1>
                 <div>
                     <div>

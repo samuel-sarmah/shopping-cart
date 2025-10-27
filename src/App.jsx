@@ -1,6 +1,15 @@
 import { Link } from "react-router";
 import { useState } from "react";
 import classes from "./App.module.scss";
+// Using online stock images for features 
+const featureImages = {
+    fastDelivery: "https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=400&h=300&fit=crop&crop=center",
+    quality: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop&crop=center",
+    security: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=300&fit=crop&crop=center",
+    support: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=300&fit=crop&crop=center",
+    pricing: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=300&fit=crop&crop=center",
+    returns: "https://images.unsplash.com/photo-1580048915913-4f8f5cb481c4?w=400&h=300&fit=crop&crop=center"
+};
 
 function App() {
     const [email, setEmail] = useState("");
@@ -16,7 +25,7 @@ function App() {
     };
 
     return (
-        <div className={classes.homePage}>
+        <div className={classes.homePage} >
             {/* Hero Section */}
             <section className={classes.hero}>
                 <h1 className={classes.title}>
@@ -33,10 +42,12 @@ function App() {
 
             {/* Features Section */}
             <section className={classes.features}>
-                <h2 className={classes.sectionTitle}>Why Choose Eesto Shoppers?</h2>
+                <h2 className={classes.sectionTitle}>Why Choose eesto Shoppers?</h2>
                 <div className={classes.featuresGrid}>
                     <div className={classes.featureCard}>
-                        <span className={classes.featureIcon}>🚚</span>
+                        <div className={classes.featureImage}>
+                            <img src={featureImages.fastDelivery} alt="Fast Delivery - Delivery truck and packages" />
+                        </div>
                         <h3 className={classes.featureTitle}>Fast Delivery</h3>
                         <p className={classes.featureDescription}>
                             Get your orders delivered quickly with our express shipping options. 
@@ -44,7 +55,9 @@ function App() {
                         </p>
                     </div>
                     <div className={classes.featureCard}>
-                        <span className={classes.featureIcon}>⭐</span>
+                        <div className={classes.featureImage}>
+                            <img src={featureImages.quality} alt="Quality Products - Premium items showcase" />
+                        </div>
                         <h3 className={classes.featureTitle}>Top Quality</h3>
                         <p className={classes.featureDescription}>
                             All products are carefully curated and tested for quality. 
@@ -52,7 +65,9 @@ function App() {
                         </p>
                     </div>
                     <div className={classes.featureCard}>
-                        <span className={classes.featureIcon}>🔒</span>
+                        <div className={classes.featureImage}>
+                            <img src={featureImages.security} alt="Secure Shopping - Protected payment and data" />
+                        </div>
                         <h3 className={classes.featureTitle}>Secure Shopping</h3>
                         <p className={classes.featureDescription}>
                             Shop with confidence using our secure payment system. 
@@ -60,7 +75,9 @@ function App() {
                         </p>
                     </div>
                     <div className={classes.featureCard}>
-                        <span className={classes.featureIcon}>💬</span>
+                        <div className={classes.featureImage}>
+                            <img src={featureImages.support} alt="24/7 Customer Support - Friendly support team" />
+                        </div>
                         <h3 className={classes.featureTitle}>24/7 Support</h3>
                         <p className={classes.featureDescription}>
                             Our friendly customer support team is available around the clock 
@@ -68,7 +85,9 @@ function App() {
                         </p>
                     </div>
                     <div className={classes.featureCard}>
-                        <span className={classes.featureIcon}>💰</span>
+                        <div className={classes.featureImage}>
+                            <img src={featureImages.pricing} alt="Best Prices - Competitive pricing and savings" />
+                        </div>
                         <h3 className={classes.featureTitle}>Best Prices</h3>
                         <p className={classes.featureDescription}>
                             Competitive prices with regular sales and discounts. 
@@ -76,7 +95,9 @@ function App() {
                         </p>
                     </div>
                     <div className={classes.featureCard}>
-                        <span className={classes.featureIcon}>📱</span>
+                        <div className={classes.featureImage}>
+                            <img src={featureImages.returns} alt="Easy Returns - Hassle-free return process" />
+                        </div>
                         <h3 className={classes.featureTitle}>Easy Returns</h3>
                         <p className={classes.featureDescription}>
                             Hassle-free returns within 30 days. No questions asked 

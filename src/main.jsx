@@ -5,6 +5,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router'
 import Products from './components/Products/products.jsx'
 import Cart from './components/cart/cart.jsx'
 import NotFound from './components/ErrorPage/NotFound.jsx'
+import './index.css'
+
+
 
 const router = createBrowserRouter([
   {
