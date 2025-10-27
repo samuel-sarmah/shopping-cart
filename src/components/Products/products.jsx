@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import useLocalStorageState from "use-local-storage-state";
 import classes from './products.module.scss'
 import Header from "../Header/Header";
+import Loader from "../Loader/Loader"
 
 const API_URL = 'https://dummyjson.com/products';
 
@@ -34,7 +35,7 @@ function Products({ }) {
         }
     }
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <Loader />;
     if (error) return <h3 className={classes.error}>A network error was encountered!</h3>
 
     const isInCart = (productId) => {

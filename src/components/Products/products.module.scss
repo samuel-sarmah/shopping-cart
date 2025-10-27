@@ -1,6 +1,7 @@
 .productPage{
     padding: 1rem;
     margin-top: 8rem;
+    font-family: sans-serif;
 
     .container {
         display: flex;
@@ -51,9 +52,10 @@
             }
         }
 
-        @media (max-width: 400px) {
+        @media (max-width: 430px) {
             .product {
                 flex-basis: 100%;
+                
             }
         }
     }
