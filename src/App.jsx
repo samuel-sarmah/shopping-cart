@@ -42,7 +42,7 @@ function App() {
 
             {/* Features Section */}
             <section className={classes.features}>
-                <h2 className={classes.sectionTitle}>Why Choose eesto Shoppers?</h2>
+                <h2 className={classes.sectionTitle}>Why Choose eesto?</h2>
                 <div className={classes.featuresGrid}>
                     <div className={classes.featureCard}>
                         <div className={classes.featureImage}>
@@ -163,7 +163,7 @@ function App() {
                         <a href="#terms">Terms of Service</a>
                     </div>
                     <p className={classes.copyright}>
-                        © 2025 Eesto Shoppers. All rights reserved. Made with ❤️ for amazing shoppers.
+                        © 2025 sarmah. All rights reserved. Made with ❤️ for amazing shoppers.
                     </p>
                 </div>
             </footer>
