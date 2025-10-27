@@ -111,7 +111,7 @@ function App() {
             <section className={classes.stats}>
                 <div className={classes.statsGrid}>
                     <div className={classes.statItem}>
-                        <span className={classes.statNumber}>50K+</span>
+                        <span className={classes.statNumber}>20K+</span>
                         <span className={classes.statLabel}>Happy Customers</span>
                     </div>
                     <div className={classes.statItem}>
