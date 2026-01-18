@@ -15,7 +15,7 @@ function Products() {
     const [selectedCategory, setSelectedCategory] = useState('all');
 
     // Use custom hooks for products and cart
-    const { products, loading, error, refetch } = useProducts(API_URL);
+    const { products, loading, error, retryCount, refetch } = useProducts(API_URL);
     const { cartItemsCount, isInCart, addToCart } = useCart();
 
     // Debounce search term
@@ -35,7 +35,16 @@ function Products() {
     }, [debouncedSetSearchTerm]);
 
     if (loading) return <Loader />;
-    if (error) return <h3 className={classes.error}>A network error was encountered!</h3>
+    if (error) return (
+        <div className={classes.errorContainer}>
+            <h3 className={classes.error}>Failed to load products</h3>
+            <p className={classes.errorMessage}>{error}</p>
+            {retryCount > 0 && <p className={classes.retryInfo}>Retrying... Attempt {retryCount}</p>}
+            <button onClick={refetch} className={classes.retryButton}>
+                Try Again
+            </button>
+        </div>
+    );
 
     // Memoize expensive calculations
     const categories = useMemo(() => ['all', ...new Set(products.map(product => product.category))], [products]);
