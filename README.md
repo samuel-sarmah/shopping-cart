@@ -2,7 +2,7 @@
 
 A modern, fully responsive shopping cart application built with React 19 and Vite. This is a demo project showcasing e-commerce functionality with a clean UI and smooth user experience.
 
-## 🚀 Features
+##  Features
 
 ### Core Functionality
 - **Product Catalog**: Browse products fetched from DummyJSON API
@@ -23,7 +23,7 @@ A modern, fully responsive shopping cart application built with React 19 and Vit
 - **Smooth Animations**: Hover effects, transitions, and loading spinners
 - **Mobile First**: Responsive breakpoints at 480px and 768px
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **React 19.1.1**: Latest React with hooks and functional components
 - **Vite**: Lightning-fast build tool and dev server
@@ -32,7 +32,7 @@ A modern, fully responsive shopping cart application built with React 19 and Vit
 - **useLocalStorageState**: Cart persistence hook
 - **DummyJSON API**: Product data source
 
-## 📦 Installation
+## Installation
 
 ```bash
 # Clone the repository
@@ -48,7 +48,7 @@ npm install
 npm run dev
 ```
 
-## 🎯 Usage
+## Usage
 
 1. **Browse Products**: Navigate to the shop page to view all products
 2. **Search**: Use the search bar to find products by name
@@ -57,14 +57,14 @@ npm run dev
 5. **Manage Cart**: Adjust quantities with +/- buttons or view total
 6. **Checkout**: Proceed to checkout to see the demo message
 
-## 📱 Pages
+## Pages
 
 - **Home** (`/`): Landing page with hero section, features, and stats
 - **Shop** (`/shop`): Product listing with search and filters
 - **Cart** (`/cart`): Shopping cart with quantity controls and totals
 - **Checkout** (`/checkout`): Demo paywall explaining project nature
 
-## 🎨 Key Components
+## Key Components
 
 - `Header`: Fixed navigation with logo, title, and cart widget
 - `CartWidget`: Cart icon with item count badge
@@ -73,7 +73,7 @@ npm run dev
 - `Loader`: Reusable loading spinner component
 - `PayWall`: Checkout page with friendly demo message
 
-## 🔧 Scripts
+## Scripts
 
 ```bash
 npm run dev          # Start development server
@@ -82,11 +82,11 @@ npm run preview      # Preview production build
 npm run lint         # Run ESLint
 ```
 
-## 📄 License
+## License
 
 This is a demo project created for portfolio purposes. Feel free to use and modify as needed.
 
-## 👤 Author
+## uthor
 
 **Samuel Sarmah**
 - GitHub: [@samuel-sarmah](https://github.com/samuel-sarmah)

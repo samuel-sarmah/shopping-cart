@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
 import { useProducts } from "../../hooks/useProducts";
 import { useCart } from "../../hooks/useCart";
@@ -34,6 +34,18 @@ function Products() {
         debouncedSetSearchTerm(value);
     }, [debouncedSetSearchTerm]);
 
+    // Memoize expensive calculations - move before early return
+    const categories = useMemo(() => ['all', ...new Set(products.map(product => product.category))], [products]);
+
+    const filteredProducts = useMemo(() => {
+        return products.filter(product => {
+            const matchesSearch = debouncedSearchTerm === '' || 
+                product.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
+            const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
+            return matchesSearch && matchesCategory;
+        });
+    }, [products, debouncedSearchTerm, selectedCategory]);
+
     if (loading) return <Loader />;
     if (error) return (
         <div className={classes.errorContainer}>
@@ -45,18 +57,6 @@ function Products() {
             </button>
         </div>
     );
-
-    // Memoize expensive calculations
-    const categories = useMemo(() => ['all', ...new Set(products.map(product => product.category))], [products]);
-
-    const filteredProducts = useMemo(() => {
-        return products.filter(product => {
-            const matchesSearch = debouncedSearchTerm === '' || 
-                product.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
-            const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
-            return matchesSearch && matchesCategory;
-        });
-    }, [products, debouncedSearchTerm, selectedCategory]);
 
     return (
         <section className={classes.productPage}> 

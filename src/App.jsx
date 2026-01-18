@@ -53,9 +53,9 @@ function App() {
             <section className={classes.dealsSection}>
                 <div className={classes.dealsContainer}>
                     <div className={classes.dealsBadge}>
-                        <span className={classes.fire}>🔥</span>
+                        <span className={classes.fire}></span>
                         <span className={classes.badgeText}>HOT DEALS</span>
-                        <span className={classes.fire}>🔥</span>
+                        <span className={classes.fire}></span>
                     </div>
                     <h2 className={classes.dealsTitle}>
                         Limited Time Offers!

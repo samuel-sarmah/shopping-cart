@@ -34,7 +34,7 @@ export default function Header({ cartItemsCount }) {
                     </Link>
                 </div>
                 <h1>
-                    Look ma, we've got all the products!
+                    in shop
                 </h1>
                 <div className={classes.cartSection}>
                     <div>
