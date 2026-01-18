@@ -35,17 +35,39 @@ function App() {
 
     return (
         <div className={classes.homePage} >
+            {/* Trust Bar */}
+            <div className={classes.trustBar}>
+                <div className={classes.trustContent}>
+                    <div className={classes.trustItem}>
+                        <span className={classes.trustIcon}>🏆</span>
+                        <span className={classes.trustText}>Industry Leading</span>
+                    </div>
+                    <div className={classes.trustItem}>
+                        <span className={classes.trustIcon}>🔒</span>
+                        <span className={classes.trustText}>100% Secure</span>
+                    </div>
+                    <div className={classes.trustItem}>
+                        <span className={classes.trustIcon}>🚚</span>
+                        <span className={classes.trustText}>Free Returns</span>
+                    </div>
+                    <div className={classes.trustItem}>
+                        <span className={classes.trustIcon}>⭐</span>
+                        <span className={classes.trustText}>4.8/5 Rating</span>
+                    </div>
+                </div>
+            </div>
+
             {/* Hero Section */}
             <section className={classes.hero}>
                 <h1 className={classes.title}>
                     eesto Shoppers
                 </h1>
                 <p className={classes.subtitle}>
-                    Discover amazing products with unbeatable quality and prices. 
-                    Your one-stop destination for all your shopping needs.
+                    Discover premium products with unbeatable quality and prices. 
+                    Your trusted destination for curated shopping excellence.
                 </p>
                 <Link to="shop" className={classes.ctaButton}>
-                    Start Shopping Now!
+                    Shop Now
                 </Link>
             </section>
 

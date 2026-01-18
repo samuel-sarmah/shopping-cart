@@ -1,0 +1,234 @@
+.productCard {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 20px var(--shadow-light);
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 1px solid var(--border);
+    
+    &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 40px var(--shadow-medium);
+        
+        .productOverlay {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+    
+    .discountBadge {
+        position: absolute;
+        top: var(--space-md);
+        left: var(--space-md);
+        background: var(--discount);
+        color: var(--white);
+        padding: var(--space-xs) var(--space-sm);
+        border-radius: var(--radius-sm);
+        font-size: var(--font-xs);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        z-index: 2;
+    }
+    
+    .productImage {
+        position: relative;
+        height: 240px;
+        background: var(--light-gray);
+        overflow: hidden;
+        
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-slow);
+        }
+        
+        &:hover img {
+            transform: scale(1.05);
+        }
+    }
+    
+    .productOverlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: all var(--transition-normal);
+        
+        .quickViewBtn {
+            background: var(--white);
+            color: var(--dark);
+            border: none;
+            padding: var(--space-md) var(--space-xl);
+            border-radius: var(--radius-md);
+            font-size: var(--font-base);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            
+            &:hover {
+                background: var(--accent);
+                color: var(--white);
+                transform: scale(1.05);
+            }
+        }
+    }
+    
+    .productContent {
+        padding: var(--space-xl);
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        
+        .productTitle {
+            font-size: var(--font-lg);
+            font-weight: 600;
+            color: var(--dark);
+            line-height: 1.4;
+            margin-bottom: var(--space-sm);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .productBrand {
+            font-size: var(--font-sm);
+            color: var(--brand);
+            font-weight: 500;
+            margin-bottom: var(--space-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .productRating {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
+            
+            .stars {
+                color: var(--rating);
+                font-size: var(--font-sm);
+            }
+            
+            .ratingCount {
+                color: var(--gray);
+                font-size: var(--font-xs);
+            }
+        }
+        
+        .productFeatures {
+            display: flex;
+            gap: var(--space-xs);
+            flex-wrap: wrap;
+            margin-bottom: var(--space-md);
+            
+            .feature {
+                background: var(--light-gray);
+                color: var(--gray);
+                padding: 2px 6px;
+                border-radius: var(--radius-sm);
+                font-size: var(--font-xs);
+                font-weight: 500;
+            }
+        }
+        
+        .productPrice {
+            font-size: var(--font-xl);
+            font-weight: 700;
+            color: var(--price);
+            margin-bottom: var(--space-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            
+            .originalPrice {
+                font-size: var(--font-base);
+                color: var(--gray);
+                text-decoration: line-through;
+                font-weight: 400;
+            }
+            
+            .discountBadge {
+                background: var(--discount);
+                color: var(--white);
+                padding: 2px 6px;
+                border-radius: var(--radius-sm);
+                font-size: var(--font-xs);
+                font-weight: 600;
+            }
+        }
+        
+        .addToCartBtn {
+            background: var(--accent);
+            color: var(--white);
+            border: none;
+            padding: var(--space-md) var(--space-xl);
+            border-radius: var(--radius-md);
+            font-size: var(--font-base);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            margin-top: auto;
+            position: relative;
+            overflow: hidden;
+            
+            &:hover:not(:disabled) {
+                background: var(--accent-hover);
+                transform: scale(1.02);
+                box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+            }
+            
+            &:disabled {
+                background: var(--gray);
+                cursor: not-allowed;
+                transform: none;
+                
+                &::after {
+                    content: 'In Cart';
+                }
+            }
+            
+            &::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                animation: shimmer 2s infinite;
+            }
+        }
+    }
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .productCard {
+        .productTitle {
+            font-size: var(--font-base);
+        }
+        
+        .addToCartBtn {
+            padding: var(--space-md) var(--space-lg);
+        }
+    }
+}
