@@ -12,13 +12,13 @@ Header.propTypes = {
 export default function Header({ cartItemsCount }) {
     const [isScrolled, setIsScrolled] = useState(false);
 
-    useEffect(() => {
+        useEffect(() => {
         const handleScroll = () => {
-            const DISTANCE_FROM_TOP = 140;
+            const DISTANCE_FROM_TOP = 50;
             const scrollY = window.scrollY || document.documentElement.scrollTop;
             setIsScrolled(scrollY > DISTANCE_FROM_TOP);
         }
-        window.addEventListener("scroll", handleScroll, false)
+        window.addEventListener("scroll", handleScroll, { passive: true })
 
         return () => {
             window.removeEventListener("scroll", handleScroll)
@@ -34,7 +34,7 @@ export default function Header({ cartItemsCount }) {
                     </Link>
                 </div>
                 <h1>
-                    in shop
+                    eesto Shoppers
                 </h1>
                 <div className={classes.cartSection}>
                     <div>

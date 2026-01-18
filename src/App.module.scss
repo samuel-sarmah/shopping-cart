@@ -3,50 +3,75 @@
   padding: 0;
   max-width: 100%;
   overflow-x: hidden;
-  background-color: rgb(240, 205, 6);
-  color: rgba(255, 255, 255, 0.87);
-  font-family: sans-serif;
+  background: linear-gradient(135deg, var(--light-gray) 0%, var(--white) 100%);
+  color: var(--dark);
+  font-family: 'Inter', sans-serif;
   z-index: 1;
 
   
   .hero {
-    padding: 4rem 2rem;
+    padding: var(--space-3xl) var(--space-xl);
     text-align: center;
-    background: transparent;
+    background: linear-gradient(135deg, var(--light-gray) 0%, var(--white) 100%);
     margin-bottom: 0;
     width: 100%;
     max-width: 100%;
     overflow-x: hidden;
+    position: relative;
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+        opacity: 0.05;
+        border-radius: 50%;
+    }
     
     .title {
-      font-size: 3.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: #1a1a1a;
-      text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
+      font-size: var(--font-4xl);
+      font-weight: 800;
+      margin-bottom: var(--space-xl);
+      color: var(--dark);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      z-index: 1;
     }
     
     .subtitle {
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
+      font-size: var(--font-xl);
+      margin-bottom: var(--space-2xl);
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
-      color: #2d2d2d;
+      color: var(--gray);
+      font-weight: 500;
     }
     
     .ctaButton {
       display: inline-block;
-      padding: 1rem 2.5rem;
-      background-color: #646cff;
-      color: white;
+      padding: var(--space-lg) var(--space-2xl);
+      background: var(--accent);
+      color: var(--white);
       text-decoration: none;
-      border-radius: 8px;
-      font-size: 1.2rem;
+      border-radius: 50px;
       font-weight: 600;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      will-change: transform;
+      font-size: var(--font-lg);
+      transition: all var(--transition-normal);
+      box-shadow: 0 4px 20px var(--shadow-light);
+      
+      &:hover {
+        background: var(--accent-hover);
+        transform: translateY(-4px);
+        box-shadow: 0 8px 30px var(--shadow-medium);
+      }
+    }
       
       &:hover {
         transform: translateY(-2px);

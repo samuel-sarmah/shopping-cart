@@ -1,35 +1,40 @@
 import { useState, useEffect, useCallback } from 'react';
+import { fetchAllProducts, fetchCategories, searchProducts } from '../utils/api';
 
 export function useProducts(apiUrl) {
     const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState(['all']);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [retryCount, setRetryCount] = useState(0);
 
-    const fetchData = useCallback(async (url, attempt = 0) => {
+    const fetchData = useCallback(async (attempt = 0) => {
         try {
             setError(null);
             setLoading(true);
             
-            const response = await fetch(url, {
-                signal: AbortSignal.timeout(10000), // 10 second timeout
-            });
+            const [productsData, categoriesData] = await Promise.allSettled([
+                fetchAllProducts(),
+                fetchCategories()
+            ]);
             
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+            if (productsData.status === 'fulfilled') {
+                setProducts(productsData.value);
+            } else {
+                throw productsData.reason;
             }
             
-            const data = await response.json();
-            setProducts(data.products || data);
+            if (categoriesData.status === 'fulfilled') {
+                setCategories(['all', ...categoriesData.value]);
+            }
+            
             setLoading(false);
             setRetryCount(0); // Reset retry count on success
         } catch (err) {
-            if (err.name === 'AbortError') {
-                setError('Request timed out. Please try again.');
-            } else if (attempt < 2 && !err.message.includes('429')) { // Retry up to 2 times for non-rate-limit errors
+            if (attempt < 2 && !err.message.includes('429')) { // Retry up to 2 times for non-rate-limit errors
                 setTimeout(() => {
                     setRetryCount(prev => prev + 1);
-                    fetchData(url, attempt + 1);
+                    fetchData(attempt + 1);
                 }, 1000 * (attempt + 1)); // Exponential backoff: 1s, 2s
             } else {
                 setError(err.message || 'Failed to fetch products');
@@ -39,19 +44,34 @@ export function useProducts(apiUrl) {
     }, []);
 
     useEffect(() => {
-        fetchData(apiUrl);
-    }, [apiUrl, fetchData]);
+        fetchData();
+    }, [fetchData]);
 
-    const retry = useCallback(() => {
+    const refetch = useCallback(() => {
         setRetryCount(0);
-        fetchData(apiUrl);
-    }, [apiUrl, fetchData]);
+        fetchData();
+    }, [fetchData]);
+
+    const search = useCallback(async (query) => {
+        try {
+            setError(null);
+            setLoading(true);
+            const searchResults = await searchProducts(query);
+            setProducts(searchResults);
+            setLoading(false);
+        } catch (err) {
+            setError(err.message || 'Search failed');
+            setLoading(false);
+        }
+    }, []);
 
     return {
         products,
+        categories,
         loading,
         error,
         retryCount,
-        refetch: retry
+        refetch,
+        search
     };
 }

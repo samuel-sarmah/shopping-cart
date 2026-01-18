@@ -7,7 +7,7 @@ import classes from './products.module.scss'
 import Header from "../Header/Header";
 import Loader from "../Loader/Loader"
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://dummyjson.com/products';
+const API_URL = import.meta.env.VITE_API_URL || 'https://fakestoreapi.com/products';
 
 function Products() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -15,36 +15,42 @@ function Products() {
     const [selectedCategory, setSelectedCategory] = useState('all');
 
     // Use custom hooks for products and cart
-    const { products, loading, error, retryCount, refetch } = useProducts(API_URL);
+    const { products, categories, loading, error, retryCount, refetch, search } = useProducts(API_URL);
     const { cartItemsCount, isInCart, addToCart } = useCart();
-
-    // Debounce search term
-    const debouncedSetSearchTerm = useCallback(
-        debounce((value) => {
-            const sanitizedValue = sanitizeInput(value);
-            setDebouncedSearchTerm(sanitizedValue);
-        }, 300),
-        []
-    );
 
     // Handle search input change
     const handleSearchChange = useCallback((e) => {
         const value = e.target.value;
         setSearchTerm(value);
-        debouncedSetSearchTerm(value);
-    }, [debouncedSetSearchTerm]);
+        
+        // Use debounced search from API
+        if (value.length > 2 || value.length === 0) {
+            search(value);
+        }
+    }, [search]);
 
-    // Memoize expensive calculations - move before early return
-    const categories = useMemo(() => ['all', ...new Set(products.map(product => product.category))], [products]);
+    // Handle category filter
+    const handleCategoryChange = useCallback((e) => {
+        const category = e.target.value;
+        setSelectedCategory(category);
+        
+        // Trigger search with category filter
+        search(debouncedSearchTerm, category);
+    }, [search, debouncedSearchTerm]);
 
+    // Filter products based on current category
     const filteredProducts = useMemo(() => {
-        return products.filter(product => {
-            const matchesSearch = debouncedSearchTerm === '' || 
-                product.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
-            const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
-            return matchesSearch && matchesCategory;
-        });
-    }, [products, debouncedSearchTerm, selectedCategory]);
+        if (selectedCategory === 'all') return products;
+        return products.filter(product => product.category === selectedCategory);
+    }, [products, selectedCategory]);
+
+    // Clear all filters
+    const clearFilters = useCallback(() => {
+        setSearchTerm('');
+        setDebouncedSearchTerm('');
+        setSelectedCategory('all');
+        search('');
+    }, [search]);
 
     if (loading) return <Loader />;
     if (error) return (
@@ -64,23 +70,24 @@ function Products() {
 
             <div className={classes.searchSection}>
                 <div className={classes.searchBar}>
-                        <input
-                            type="text"
-                            placeholder="Search products by name..."
-                            value={searchTerm}
-                            onChange={handleSearchChange}
-                            className={classes.searchInput}
-                            aria-label="Search products"
-                            maxLength="100"
-                        />
+                    <input
+                        type="text"
+                        placeholder="Search for premium products..."
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                        className={classes.searchInput}
+                        aria-label="Search products"
+                        maxLength="100"
+                    />
                     <select
                         value={selectedCategory}
-                        onChange={(e) => setSelectedCategory(e.target.value)}
+                        onChange={handleCategoryChange}
                         className={classes.categorySelect}
+                        aria-label="Filter by category"
                     >
                         {categories.map(category => (
                             <option key={category} value={category}>
-                                {category === 'all' ? 'All Categories' : category.charAt(0).toUpperCase() + category.slice(1)}
+                                {category === 'all' ? 'All Categories' : category}
                             </option>
                         ))}
                     </select>
@@ -102,34 +109,80 @@ function Products() {
                             <br />
                             Try adjusting your filters or search term.
                         </p>
-                        <button 
-                            onClick={() => {
-                                setSearchTerm('');
-                                setDebouncedSearchTerm('');
-                                setSelectedCategory('all');
-                            }}
-                            className={classes.resetButton}
-                        >
+                        <button onClick={clearFilters} className={classes.resetButton}>
                             Clear Filters
                         </button>
                     </div>
                 ) : (
                     filteredProducts.map(product => (
-                        <div className={classes.product} key={product.id} role="article" aria-label={`${product.title}, $${product.price}, ${product.rating} stars`}>
-                            <img src={product.thumbnail} alt={product.title} loading="lazy" aria-describedby={`product-${product.id}-info`} />
-                            <div id={`product-${product.id}-info`}>
-                                <h3>{product.title}</h3>
-                                <p className={classes.category}>{product.category}</p>
-                                <p>Price: ${product.price}</p>
-                                <p>Rating: {product.rating}</p>
+                        <div className={classes.product} key={product.id} role="article" aria-label={`${product.title}, ${product.formattedPrice}, ${product.rating?.rate || 4} stars`}>
+                            {product.discount > 0 && (
+                                <div className={classes.productBadge}>
+                                    -{product.discount}%
+                                </div>
+                            )}
+                            
+                            <div className={classes.productImage}>
+                                <img src={product.image} alt={product.title} loading="lazy" />
+                                <div className={classes.productOverlay}>
+                                    <button className={classes.quickViewBtn}>
+                                        Quick View
+                                    </button>
+                                </div>
                             </div>
-                            <button
-                                onClick={() => addToCart(product)}
-                                aria-label={`Add ${product.title} to cart`}
-                                aria-describedby={`product-${product.id}-info`}
-                            >
-                                {isInCart(product.id) ? 'In Cart' : 'Add to Cart'}
-                            </button>
+                            
+                            <div className={classes.productContent}>
+                                <h3 className={classes.productTitle}>{product.title}</h3>
+                                
+                                {product.brand && (
+                                    <div className={classes.productBrand}>{product.brand}</div>
+                                )}
+                                
+                                <div className={classes.productRating}>
+                                    <span className={classes.stars}>
+                                        {'★'.repeat(Math.floor(product.rating?.rate || 4))}
+                                        {'☆'.repeat(5 - Math.floor(product.rating?.rate || 4))}
+                                    </span>
+                                    <span className={classes.ratingCount}>
+                                        ({product.rating?.count || 50})
+                                    </span>
+                                </div>
+                                
+                                {product.features && product.features.length > 0 && (
+                                    <div className={classes.productFeatures}>
+                                        {product.features.slice(0, 2).map((feature, index) => (
+                                            <span key={index} className={classes.feature}>
+                                                {feature}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
+                                
+                                <div className={classes.productPrice}>
+                                    <span>
+                                        {product.discount > 0 && (
+                                            <span className={classes.originalPrice}>
+                                                ${product.price}
+                                            </span>
+                                        )}
+                                        ${((product.price * (100 - product.discount)) / 100).toFixed(2)}
+                                    </span>
+                                    {product.discount > 0 && (
+                                        <span className={classes.discountBadge}>
+                                            Save {product.discount}%
+                                        </span>
+                                    )}
+                                </div>
+                                
+                                <button
+                                    onClick={() => addToCart(product)}
+                                    className={classes.addToCartBtn}
+                                    disabled={isInCart(product.id)}
+                                    aria-label={`Add ${product.title} to cart`}
+                                >
+                                    {isInCart(product.id) ? '' : 'Add to Cart'}
+                                </button>
+                            </div>
                         </div>
                     ))
                 )}
