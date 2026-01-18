@@ -4,9 +4,9 @@ import classes from './products.module.scss'
 import Header from "../Header/Header";
 import Loader from "../Loader/Loader"
 
-const API_URL = 'https://dummyjson.com/products';
+const API_URL = import.meta.env.VITE_API_URL || 'https://dummyjson.com/products';
 
-function Products({ }) {
+function Products() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null)
@@ -31,7 +31,7 @@ function Products({ }) {
                 setError(true);
                 setLoading(false);
             }
-        } catch (err) {
+        } catch (_) {
             setError(true);
             setLoading(false);
         }
