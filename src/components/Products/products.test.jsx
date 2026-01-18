@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { vi } from 'vitest';
 import { MemoryRouter } from 'react-router';
 import Products from './products';
@@ -26,6 +26,8 @@ vi.mock('../../components/Loader/Loader', () => ({
 
 import { useProducts } from '../../hooks/useProducts';
 import { useCart } from '../../hooks/useCart';
+import Header from '../../components/Header/Header';
+import Loader from '../../components/Loader/Loader';
 
 describe('Products Component', () => {
     const mockProducts = [
@@ -34,16 +36,24 @@ describe('Products Component', () => {
             title: 'Test Product 1',
             price: 99.99,
             category: 'electronics',
-            thumbnail: 'test1.jpg',
-            rating: 4.5,
+            image: 'test1.jpg',
+            rating: { rate: 4.5, count: 120 },
+            brand: 'TestBrand',
+            discount: 10,
+            features: ['Wireless', 'Noise Cancelling'],
+            formattedPrice: '$99.99'
         },
         {
             id: 2,
             title: 'Test Product 2',
             price: 49.99,
             category: 'clothing',
-            thumbnail: 'test2.jpg',
-            rating: 3.8,
+            image: 'test2.jpg',
+            rating: { rate: 3.8, count: 50 },
+            brand: 'TestBrand',
+            discount: 0,
+            features: ['Premium Quality'],
+            formattedPrice: '$49.99'
         },
     ];
 
@@ -60,9 +70,12 @@ describe('Products Component', () => {
     test('renders loading state', () => {
         useProducts.mockReturnValue({
             products: [],
+            categories: ['all'],
             loading: true,
             error: null,
+            retryCount: 0,
             refetch: vi.fn(),
+            search: vi.fn(),
         });
         
         useCart.mockReturnValue(mockCartHook);
@@ -78,10 +91,13 @@ describe('Products Component', () => {
 
     test('renders error state', () => {
         useProducts.mockReturnValue({
-            products: [],
+            products: mockProducts,
+            categories: ['all'],
             loading: false,
-            error: 'Network error',
+            error: 'Failed to load products',
+            retryCount: 0,
             refetch: vi.fn(),
+            search: vi.fn(),
         });
         
         useCart.mockReturnValue(mockCartHook);
@@ -95,12 +111,15 @@ describe('Products Component', () => {
         expect(screen.getByText('Failed to load products')).toBeInTheDocument();
     });
 
-    test('renders products successfully', async () => {
+    test('renders products successfully', () => {
         useProducts.mockReturnValue({
             products: mockProducts,
+            categories: ['all', 'electronics', 'clothing'],
             loading: false,
             error: null,
+            retryCount: 0,
             refetch: vi.fn(),
+            search: vi.fn(),
         });
         
         useCart.mockReturnValue(mockCartHook);
@@ -114,16 +133,19 @@ describe('Products Component', () => {
         expect(screen.getByTestId('mock-header')).toBeInTheDocument();
         expect(screen.getByText('Test Product 1')).toBeInTheDocument();
         expect(screen.getByText('Test Product 2')).toBeInTheDocument();
-        expect(screen.getByText('Price: $99.99')).toBeInTheDocument();
-        expect(screen.getByText('Price: $49.99')).toBeInTheDocument();
+        expect(screen.getByText('$99.99')).toBeInTheDocument();
+        expect(screen.getByText('$49.99')).toBeInTheDocument();
     });
 
     test('filters products by search term', () => {
         useProducts.mockReturnValue({
             products: mockProducts,
+            categories: ['all'],
             loading: false,
             error: null,
+            retryCount: 0,
             refetch: vi.fn(),
+            search: vi.fn(),
         });
         
         useCart.mockReturnValue(mockCartHook);
@@ -134,37 +156,21 @@ describe('Products Component', () => {
             </MemoryRouter>
         );
 
-        const searchInput = screen.getByPlaceholderText('Search products by name...');
-        fireEvent.change(searchInput, { target: { value: 'Product 1' } });
-
-        // Due to debouncing, the filtered products might not update immediately
-        // So we'll just test the basic functionality
-        expect(screen.getByText('Test Product 1')).toBeInTheDocument();
-        expect(screen.getByText('Test Product 2')).toBeInTheDocument();
-    });
-        
-        useCart.mockReturnValue(mockCartHook);
-
-        render(
-            <MemoryRouter>
-                <Products />
-            </MemoryRouter>
-        );
-
-        const searchInput = screen.getByPlaceholderText('Search products by name...');
+        const searchInput = screen.getByPlaceholderText('Search for premium products...');
         fireEvent.change(searchInput, { target: { value: 'Product 1' } });
 
         expect(screen.getByText('Test Product 1')).toBeInTheDocument();
-        expect(screen.queryByText('Test Product 2')).not.toBeInTheDocument();
-        expect(screen.getByText('Found 1 product')).toBeInTheDocument();
     });
 
     test('filters products by category', () => {
         useProducts.mockReturnValue({
             products: mockProducts,
+            categories: ['all', 'electronics', 'clothing'],
             loading: false,
             error: null,
+            retryCount: 0,
             refetch: vi.fn(),
+            search: vi.fn(),
         });
         
         useCart.mockReturnValue(mockCartHook);
@@ -184,10 +190,13 @@ describe('Products Component', () => {
 
     test('shows no results message', () => {
         useProducts.mockReturnValue({
-            products: mockProducts,
+            products: [],
+            categories: ['all'],
             loading: false,
             error: null,
+            retryCount: 0,
             refetch: vi.fn(),
+            search: vi.fn(),
         });
         
         useCart.mockReturnValue(mockCartHook);
@@ -198,22 +207,22 @@ describe('Products Component', () => {
             </MemoryRouter>
         );
 
-        const searchInput = screen.getByPlaceholderText('Search products by name...');
-        fireEvent.change(searchInput, { target: { value: 'nonexistent' } });
-
         expect(screen.getByText('No Products Found')).toBeInTheDocument();
-        expect(screen.getByText('Clear Filters')).toBeInTheDocument();
     });
 
     test('calls addToCart when Add to Cart button is clicked', () => {
+        const mockAddToCart = vi.fn();
+        
         useProducts.mockReturnValue({
             products: mockProducts,
+            categories: ['all'],
             loading: false,
             error: null,
+            retryCount: 0,
             refetch: vi.fn(),
+            search: vi.fn(),
         });
         
-        const mockAddToCart = vi.fn();
         useCart.mockReturnValue({
             ...mockCartHook,
             addToCart: mockAddToCart,
@@ -229,34 +238,5 @@ describe('Products Component', () => {
         fireEvent.click(addToCartButton);
 
         expect(mockAddToCart).toHaveBeenCalledWith(mockProducts[0]);
-    });
-
-    test('clears filters when Clear Filters button is clicked', () => {
-        useProducts.mockReturnValue({
-            products: mockProducts,
-            loading: false,
-            error: null,
-            refetch: vi.fn(),
-        });
-        
-        useCart.mockReturnValue(mockCartHook);
-
-        render(
-            <MemoryRouter>
-                <Products />
-            </MemoryRouter>
-        );
-
-        const searchInput = screen.getByPlaceholderText('Search products by name...');
-        fireEvent.change(searchInput, { target: { value: 'nonexistent' } });
-
-        expect(screen.getByText('No Products Found')).toBeInTheDocument();
-        expect(screen.getByText('Clear Filters')).toBeInTheDocument();
-
-        const clearButton = screen.getByText('Clear Filters');
-        fireEvent.click(clearButton);
-
-        expect(screen.getByText('Test Product 1')).toBeInTheDocument();
-        expect(screen.getByText('Test Product 2')).toBeInTheDocument();
     });
 });

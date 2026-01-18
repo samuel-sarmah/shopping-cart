@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
 import { useProducts } from "../../hooks/useProducts";
 import { useCart } from "../../hooks/useCart";
-import { sanitizeInput, debounce } from "../../utils/validation";
+
 import classes from './products.module.scss'
 import Header from "../Header/Header";
 import Loader from "../Loader/Loader"

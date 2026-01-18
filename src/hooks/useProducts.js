@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { fetchAllProducts, fetchCategories, searchProducts } from '../utils/api';
 
-export function useProducts(apiUrl) {
+export function useProducts() {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState(['all']);
     const [loading, setLoading] = useState(true);
