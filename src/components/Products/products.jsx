@@ -1,7 +1,8 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useProducts } from "../../hooks/useProducts";
 import { useCart } from "../../hooks/useCart";
+import { sanitizeInput, debounce } from "../../utils/validation";
 import classes from './products.module.scss'
 import Header from "../Header/Header";
 import Loader from "../Loader/Loader"
@@ -10,11 +11,28 @@ const API_URL = import.meta.env.VITE_API_URL || 'https://dummyjson.com/products'
 
 function Products() {
     const [searchTerm, setSearchTerm] = useState('');
+    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('all');
 
     // Use custom hooks for products and cart
     const { products, loading, error, refetch } = useProducts(API_URL);
     const { cartItemsCount, isInCart, addToCart } = useCart();
+
+    // Debounce search term
+    const debouncedSetSearchTerm = useCallback(
+        debounce((value) => {
+            const sanitizedValue = sanitizeInput(value);
+            setDebouncedSearchTerm(sanitizedValue);
+        }, 300),
+        []
+    );
+
+    // Handle search input change
+    const handleSearchChange = useCallback((e) => {
+        const value = e.target.value;
+        setSearchTerm(value);
+        debouncedSetSearchTerm(value);
+    }, [debouncedSetSearchTerm]);
 
     if (loading) return <Loader />;
     if (error) return <h3 className={classes.error}>A network error was encountered!</h3>
@@ -24,11 +42,12 @@ function Products() {
 
     const filteredProducts = useMemo(() => {
         return products.filter(product => {
-            const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase());
+            const matchesSearch = debouncedSearchTerm === '' || 
+                product.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase());
             const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
             return matchesSearch && matchesCategory;
         });
-    }, [products, searchTerm, selectedCategory]);
+    }, [products, debouncedSearchTerm, selectedCategory]);
 
     return (
         <section className={classes.productPage}> 
@@ -36,13 +55,15 @@ function Products() {
 
             <div className={classes.searchSection}>
                 <div className={classes.searchBar}>
-                    <input
-                        type="text"
-                        placeholder="Search products by name..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className={classes.searchInput}
-                    />
+                        <input
+                            type="text"
+                            placeholder="Search products by name..."
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                            className={classes.searchInput}
+                            aria-label="Search products"
+                            maxLength="100"
+                        />
                     <select
                         value={selectedCategory}
                         onChange={(e) => setSelectedCategory(e.target.value)}
@@ -55,11 +76,11 @@ function Products() {
                         ))}
                     </select>
                 </div>
-                {(searchTerm || selectedCategory !== 'all') && (
-                    <p className={classes.resultsCount}>
-                        Found {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''}
-                    </p>
-                )}
+                        {(debouncedSearchTerm || selectedCategory !== 'all') && (
+                            <p className={classes.resultsCount}>
+                                Found {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''}
+                            </p>
+                        )}
             </div>
 
             <div className={classes.container}>
@@ -75,6 +96,7 @@ function Products() {
                         <button 
                             onClick={() => {
                                 setSearchTerm('');
+                                setDebouncedSearchTerm('');
                                 setSelectedCategory('all');
                             }}
                             className={classes.resetButton}

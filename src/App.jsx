@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { useState } from "react";
+import { sanitizeInput, isValidEmail } from "./utils/validation";
 import classes from "./App.module.scss";
 
 const featureImages = {
@@ -24,7 +25,8 @@ function App() {
 
     const handleNewsletterSubmit = (e) => {
         e.preventDefault();
-        if (email) {
+        const sanitizedEmail = sanitizeInput(email);
+        if (sanitizedEmail && isValidEmail(sanitizedEmail)) {
             setSubscribed(true);
             setEmail("");
             setTimeout(() => setSubscribed(false), 3000);
