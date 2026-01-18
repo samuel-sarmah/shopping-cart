@@ -1,8 +1,13 @@
 import { Link } from 'react-router'
+import PropTypes from 'prop-types'
 import classes from './header.module.scss'
 import logo from '../../assets/shopping-icon.svg'
 import CartWidget from '../cartWidget/CartWidget'
 import { useEffect, useState } from 'react'
+
+Header.propTypes = {
+    cartItemsCount: PropTypes.number.isRequired,
+}
 
 export default function Header({ cartItemsCount }) {
     const [isScrolled, setIsScrolled] = useState(false);
