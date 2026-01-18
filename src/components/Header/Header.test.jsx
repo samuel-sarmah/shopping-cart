@@ -28,7 +28,7 @@ describe('Header Component', () => {
         );
 
         expect(screen.getByAltText('eesto Shoppers logo')).toBeInTheDocument();
-        expect(screen.getByText('Look ma, we\'ve got all the products!')).toBeInTheDocument();
+        expect(screen.getByText('eesto Shoppers')).toBeInTheDocument();
         expect(screen.getByTestId('mock-cart-widget')).toHaveTextContent('Cart: 5');
     });
 
