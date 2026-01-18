@@ -2,6 +2,7 @@ import { StrictMode, lazy, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import Loader from './components/Loader/Loader.jsx'
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.jsx'
 import './index.css'
 
 // Lazy load components for code splitting and loading states
@@ -68,6 +69,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <ErrorBoundary>
       <RouterProvider router={router} />
+    </ErrorBoundary>
   </StrictMode>,
 )
