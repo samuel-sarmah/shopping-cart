@@ -27,7 +27,7 @@ describe('Header Component', () => {
             </MemoryRouter>
         );
 
-        expect(screen.getByAltText('shopping cart Application')).toBeInTheDocument();
+        expect(screen.getByAltText('eesto Shoppers logo')).toBeInTheDocument();
         expect(screen.getByText('Look ma, we\'ve got all the products!')).toBeInTheDocument();
         expect(screen.getByTestId('mock-cart-widget')).toHaveTextContent('Cart: 5');
     });
@@ -49,7 +49,7 @@ describe('Header Component', () => {
             </MemoryRouter>
         );
 
-        const logoLink = screen.getByRole('link', { name: /shopping cart application/i });
+        const logoLink = screen.getByRole('link', { name: /go to home page/i });
         expect(logoLink).toBeInTheDocument();
         expect(logoLink).toHaveAttribute('href', '/');
     });
