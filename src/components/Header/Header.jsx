@@ -29,8 +29,8 @@ export default function Header({ cartItemsCount }) {
         <>
             <div className={`${classes.header} ${isScrolled ? classes.shrink : ''}`}>
                 <div>
-                    <Link to="/">
-                        <img src={logo} alt="shopping cart Application" className={classes.logo}/>
+                    <Link to="/" aria-label="Go to home page">
+                        <img src={logo} alt="eesto Shoppers logo" className={classes.logo}/>
                     </Link>
                 </div>
                 <h1>

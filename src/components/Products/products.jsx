@@ -76,11 +76,11 @@ function Products() {
                         ))}
                     </select>
                 </div>
-                        {(debouncedSearchTerm || selectedCategory !== 'all') && (
-                            <p className={classes.resultsCount}>
-                                Found {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''}
-                            </p>
-                        )}
+                {(debouncedSearchTerm || selectedCategory !== 'all') && (
+                    <p className={classes.resultsCount} role="status" aria-live="polite">
+                        Found {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''}
+                    </p>
+                )}
             </div>
 
             <div className={classes.container}>
@@ -106,14 +106,18 @@ function Products() {
                     </div>
                 ) : (
                     filteredProducts.map(product => (
-                        <div className={classes.product} key={product.id}>
-                            <img src={product.thumbnail} alt={product.title} loading="lazy" />
-                            <h3>{product.title}</h3>
-                            <p className={classes.category}>{product.category}</p>
-                            <p>Price: ${product.price}</p>
-                            <p>Rating: {product.rating}</p>
+                        <div className={classes.product} key={product.id} role="article" aria-label={`${product.title}, $${product.price}, ${product.rating} stars`}>
+                            <img src={product.thumbnail} alt={product.title} loading="lazy" aria-describedby={`product-${product.id}-info`} />
+                            <div id={`product-${product.id}-info`}>
+                                <h3>{product.title}</h3>
+                                <p className={classes.category}>{product.category}</p>
+                                <p>Price: ${product.price}</p>
+                                <p>Rating: {product.rating}</p>
+                            </div>
                             <button
                                 onClick={() => addToCart(product)}
+                                aria-label={`Add ${product.title} to cart`}
+                                aria-describedby={`product-${product.id}-info`}
                             >
                                 {isInCart(product.id) ? 'In Cart' : 'Add to Cart'}
                             </button>
