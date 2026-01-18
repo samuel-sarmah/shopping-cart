@@ -1,28 +1,28 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router';
+import { vi } from 'vitest';
 import { MemoryRouter } from 'react-router';
 import Products from './products';
 
 // Mock the hooks
-jest.mock('../../hooks/useProducts', () => ({
-    useProducts: jest.fn(),
+vi.mock('../../hooks/useProducts', () => ({
+    useProducts: vi.fn(),
 }));
 
-jest.mock('../../hooks/useCart', () => ({
-    useCart: jest.fn(),
+vi.mock('../../hooks/useCart', () => ({
+    useCart: vi.fn(),
 }));
 
-jest.mock('../../components/Header/Header', () => {
-    return function MockHeader({ cartItemsCount }) {
+vi.mock('../../components/Header/Header', () => ({
+    default: function MockHeader({ cartItemsCount }) {
         return <div data-testid="mock-header">Cart: {cartItemsCount}</div>;
-    };
-});
+    },
+}));
 
-jest.mock('../../components/Loader/Loader', () => {
-    return function MockLoader() {
+vi.mock('../../components/Loader/Loader', () => ({
+    default: function MockLoader() {
         return <div data-testid="mock-loader">Loading...</div>;
-    };
-});
+    },
+}));
 
 import { useProducts } from '../../hooks/useProducts';
 import { useCart } from '../../hooks/useCart';
@@ -49,12 +49,12 @@ describe('Products Component', () => {
 
     const mockCartHook = {
         cartItemsCount: 2,
-        isInCart: jest.fn(),
-        addToCart: jest.fn(),
+        isInCart: vi.fn(),
+        addToCart: vi.fn(),
     };
 
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     test('renders loading state', () => {
@@ -62,7 +62,7 @@ describe('Products Component', () => {
             products: [],
             loading: true,
             error: null,
-            refetch: jest.fn(),
+            refetch: vi.fn(),
         });
         
         useCart.mockReturnValue(mockCartHook);
@@ -81,7 +81,7 @@ describe('Products Component', () => {
             products: [],
             loading: false,
             error: 'Network error',
-            refetch: jest.fn(),
+            refetch: vi.fn(),
         });
         
         useCart.mockReturnValue(mockCartHook);
@@ -100,7 +100,7 @@ describe('Products Component', () => {
             products: mockProducts,
             loading: false,
             error: null,
-            refetch: jest.fn(),
+            refetch: vi.fn(),
         });
         
         useCart.mockReturnValue(mockCartHook);
@@ -114,8 +114,8 @@ describe('Products Component', () => {
         expect(screen.getByTestId('mock-header')).toBeInTheDocument();
         expect(screen.getByText('Test Product 1')).toBeInTheDocument();
         expect(screen.getByText('Test Product 2')).toBeInTheDocument();
-        expect(screen.getByText('$99.99')).toBeInTheDocument();
-        expect(screen.getByText('$49.99')).toBeInTheDocument();
+        expect(screen.getByText('Price: $99.99')).toBeInTheDocument();
+        expect(screen.getByText('Price: $49.99')).toBeInTheDocument();
     });
 
     test('filters products by search term', () => {
@@ -123,7 +123,7 @@ describe('Products Component', () => {
             products: mockProducts,
             loading: false,
             error: null,
-            refetch: jest.fn(),
+            refetch: vi.fn(),
         });
         
         useCart.mockReturnValue(mockCartHook);
@@ -147,7 +147,7 @@ describe('Products Component', () => {
             products: mockProducts,
             loading: false,
             error: null,
-            refetch: jest.fn(),
+            refetch: vi.fn(),
         });
         
         useCart.mockReturnValue(mockCartHook);
@@ -170,7 +170,7 @@ describe('Products Component', () => {
             products: mockProducts,
             loading: false,
             error: null,
-            refetch: jest.fn(),
+            refetch: vi.fn(),
         });
         
         useCart.mockReturnValue(mockCartHook);
@@ -193,10 +193,10 @@ describe('Products Component', () => {
             products: mockProducts,
             loading: false,
             error: null,
-            refetch: jest.fn(),
+            refetch: vi.fn(),
         });
         
-        const mockAddToCart = jest.fn();
+        const mockAddToCart = vi.fn();
         useCart.mockReturnValue({
             ...mockCartHook,
             addToCart: mockAddToCart,
@@ -219,7 +219,7 @@ describe('Products Component', () => {
             products: mockProducts,
             loading: false,
             error: null,
-            refetch: jest.fn(),
+            refetch: vi.fn(),
         });
         
         useCart.mockReturnValue(mockCartHook);
@@ -231,13 +231,15 @@ describe('Products Component', () => {
         );
 
         const searchInput = screen.getByPlaceholderText('Search products by name...');
-        fireEvent.change(searchInput, { target: { value: 'test' } });
+        fireEvent.change(searchInput, { target: { value: 'nonexistent' } });
 
-        expect(screen.getByText('Found 2 products')).toBeInTheDocument();
+        expect(screen.getByText('No Products Found')).toBeInTheDocument();
+        expect(screen.getByText('Clear Filters')).toBeInTheDocument();
 
         const clearButton = screen.getByText('Clear Filters');
         fireEvent.click(clearButton);
 
-        expect(screen.getByText('Found 2 products')).toBeInTheDocument();
+        expect(screen.getByText('Test Product 1')).toBeInTheDocument();
+        expect(screen.getByText('Test Product 2')).toBeInTheDocument();
     });
 });
