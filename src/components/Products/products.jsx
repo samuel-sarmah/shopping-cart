@@ -11,7 +11,6 @@ const API_URL = import.meta.env.VITE_API_URL || 'https://fakestoreapi.com/produc
 
 function Products() {
     const [searchTerm, setSearchTerm] = useState('');
-    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('all');
 
     // Use custom hooks for products and cart
@@ -35,7 +34,7 @@ function Products() {
         setSelectedCategory(category);
         
         // Trigger search with category filter
-        search(debouncedSearchTerm, category);
+        search(searchTerm, category);
     }, [search, debouncedSearchTerm]);
 
     // Filter products based on current category
@@ -47,7 +46,6 @@ function Products() {
     // Clear all filters
     const clearFilters = useCallback(() => {
         setSearchTerm('');
-        setDebouncedSearchTerm('');
         setSelectedCategory('all');
         search('');
     }, [search]);
@@ -92,7 +90,7 @@ function Products() {
                         ))}
                     </select>
                 </div>
-                {(debouncedSearchTerm || selectedCategory !== 'all') && (
+                {(searchTerm || selectedCategory !== 'all') && (
                     <p className={classes.resultsCount} role="status" aria-live="polite">
                         Found {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''}
                     </p>
