@@ -55,7 +55,7 @@ function Products() {
     if (loading) return <Loader />;
     if (error) return (
         <div className={classes.errorContainer}>
-            <h3 className={classes.error}>Failed to load products</h3>
+            <h3 className={classes.error}>Error Loading Products</h3>
             <p className={classes.errorMessage}>{error}</p>
             {retryCount > 0 && <p className={classes.retryInfo}>Retrying... Attempt {retryCount}</p>}
             <button onClick={refetch} className={classes.retryButton}>
