@@ -108,7 +108,7 @@ describe('Products Component', () => {
             </MemoryRouter>
         );
 
-        expect(screen.getByText('Failed to load products')).toBeInTheDocument();
+        expect(screen.getByText('Error Loading Products')).toBeInTheDocument();
     });
 
     test('renders products successfully', () => {
