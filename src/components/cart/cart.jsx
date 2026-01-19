@@ -58,7 +58,7 @@ const Cart = () => {
                 ) : (
                     cartItems.map(item => (
                         <div key={item.id} className={classes.product}>
-                            <img src={item.thumbnail} alt={item.title} />
+                            <img src={item.image} alt={item.title} />
                             <h3>{item.title}</h3> 
                             <div className={classes.productCalc}>
                                 <p><b>Price:</b> ${item.price}</p>&ensp;
