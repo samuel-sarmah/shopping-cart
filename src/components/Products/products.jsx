@@ -35,7 +35,7 @@ function Products() {
         
         // Trigger search with category filter
         search(searchTerm, category);
-    }, [search, debouncedSearchTerm]);
+    }, [search, searchTerm]);
 
     // Filter products based on current category
     const filteredProducts = useMemo(() => {
