@@ -71,94 +71,37 @@ function App() {
                 </Link>
             </section>
 
-            {/* Hot Deals Banner */}
+            {/* Special Offers Banner */}
             <section className={classes.dealsSection}>
                 <div className={classes.dealsContainer}>
                     <div className={classes.dealsBadge}>
-                        <span className={classes.fire}></span>
-                        <span className={classes.badgeText}>HOT DEALS</span>
-                        <span className={classes.fire}></span>
+                        <span className={classes.badgeText}>SPECIAL OFFERS</span>
                     </div>
                     <h2 className={classes.dealsTitle}>
-                        Limited Time Offers!
+                        Curated Deals Just For You
                     </h2>
                     <p className={classes.dealsSubtitle}>
-                        Don't miss out on incredible savings across all categories
+                        Premium products selected by our shopping experts
                     </p>
-                    
-                    <div className={classes.dealsGrid}>
-                        <div className={classes.dealCard}>
-                            <div className={classes.dealImage}>
-                                <img src={dealImages.electronics} alt="Electronics deals" />
-                                <div className={classes.dealOverlay}>
-                                    <div className={classes.dealIcon}></div>
-                                </div>
-                            </div>
-                            <div className={classes.dealContent}>
-                                <div className={classes.dealDiscount}>UP TO 50% OFF</div>
-                                <div className={classes.dealCategory}>Electronics</div>
-                            </div>
+                </div>
+                <div className={classes.countdown}>
+                    <span className={classes.countdownText}>
+                        ⏰ Limited Time: Flash Sale Ends In
+                    </span>
+                    <div className={classes.countdownTimer}>
+                        <div className={classes.timeBlock}>
+                            <span className={classes.timeNumber}>02</span>
+                            <span className={classes.timeLabel}>Hours</span>
                         </div>
-                        <div className={classes.dealCard}>
-                            <div className={classes.dealImage}>
-                                <img src={dealImages.beauty} alt="Beauty products" />
-                                <div className={classes.dealOverlay}>
-                                    <div className={classes.dealIcon}></div>
-                                </div>
-                            </div>
-                            <div className={classes.dealContent}>
-                                <div className={classes.dealDiscount}>BUY 2 GET 1</div>
-                                <div className={classes.dealCategory}>Beauty</div>
-                            </div>
+                        <span className={classes.timeSeparator}>:</span>
+                        <div className={classes.timeBlock}>
+                            <span className={classes.timeNumber}>30</span>
+                            <span className={classes.timeLabel}>Mins</span>
                         </div>
-                        <div className={classes.dealCard}>
-                            <div className={classes.dealImage}>
-                                <img src={dealImages.shipping} alt="Free shipping" />
-                                <div className={classes.dealOverlay}>
-                                    <div className={classes.dealIcon}></div>
-                                </div>
-                            </div>
-                            <div className={classes.dealContent}>
-                                <div className={classes.dealDiscount}>FREE SHIPPING</div>
-                                <div className={classes.dealCategory}>Orders $50+</div>
-                            </div>
-                        </div>
-                        <div className={classes.dealCard}>
-                            <div className={classes.dealImage}>
-                                <img src={dealImages.flash} alt="Flash sale" />
-                                <div className={classes.dealOverlay}>
-                                    <div className={classes.dealIcon}></div>
-                                </div>
-                            </div>
-                            <div className={classes.dealContent}>
-                                <div className={classes.dealDiscount}>FLASH SALE</div>
-                                <div className={classes.dealCategory}>Today Only</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <Link to="shop" className={classes.shopDealsButton}>
-                        <span>Shop All Deals Now</span>
-                        <span className={classes.arrow}>→</span>
-                    </Link>
-                    
-                    <div className={classes.countdown}>
-                        <span className={classes.countdownText}>⏰ Hurry! Deals end in:</span>
-                        <div className={classes.countdownTimer}>
-                            <div className={classes.timeBlock}>
-                                <span className={classes.timeNumber}>23</span>
-                                <span className={classes.timeLabel}>Hours</span>
-                            </div>
-                            <span className={classes.timeSeparator}>:</span>
-                            <div className={classes.timeBlock}>
-                                <span className={classes.timeNumber}>45</span>
-                                <span className={classes.timeLabel}>Mins</span>
-                            </div>
-                            <span className={classes.timeSeparator}>:</span>
-                            <div className={classes.timeBlock}>
-                                <span className={classes.timeNumber}>12</span>
-                                <span className={classes.timeLabel}>Secs</span>
-                            </div>
+                        <span className={classes.timeSeparator}>:</span>
+                        <div className={classes.timeBlock}>
+                            <span className={classes.timeNumber}>45</span>
+                            <span className={classes.timeLabel}>Secs</span>
                         </div>
                     </div>
                 </div>
