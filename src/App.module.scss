@@ -350,7 +350,7 @@
       min-width: min(250px, 100%);
       max-width: 100%;
       padding: var(--space-md) var(--space-xl);
-      border: none;
+      border: 2px solid transparent;
       border-radius: var(--radius-md);
       font-size: var(--font-lg);
       background-color: var(--white);
