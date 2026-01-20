@@ -6,12 +6,15 @@ import { useCart } from "../../hooks/useCart";
 import classes from './products.module.scss'
 import Header from "../Header/Header";
 import Loader from "../Loader/Loader"
+import QuickViewModal from "../QuickViewModal/QuickViewModal"
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://fakestoreapi.com/products';
 
 function Products() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('all');
+    const [quickViewProduct, setQuickViewProduct] = useState(null);
+    const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
 
     // Use custom hooks for products and cart
     const { products, categories, loading, error, retryCount, refetch, search } = useProducts(API_URL);
@@ -49,6 +52,17 @@ function Products() {
         setSelectedCategory('all');
         search('');
     }, [search]);
+
+    // Quick view handlers
+    const handleQuickView = useCallback((product) => {
+        setQuickViewProduct(product);
+        setIsQuickViewOpen(true);
+    }, []);
+
+    const handleCloseQuickView = useCallback(() => {
+        setIsQuickViewOpen(false);
+        setTimeout(() => setQuickViewProduct(null), 300);
+    }, []);
 
     if (loading) return <Loader />;
     if (error) return (
@@ -123,7 +137,10 @@ function Products() {
                             <div className={classes.productImage}>
                                 <img src={product.image} alt={product.title} loading="lazy" />
                                 <div className={classes.productOverlay}>
-                                    <button className={classes.quickViewBtn}>
+                                    <button 
+                                        className={classes.quickViewBtn}
+                                        onClick={() => handleQuickView(product)}
+                                    >
                                         Quick View
                                     </button>
                                 </div>
@@ -185,6 +202,15 @@ function Products() {
                     ))
                 )}
             </div>
+
+            {/* Quick View Modal */}
+            <QuickViewModal
+                product={quickViewProduct}
+                isOpen={isQuickViewOpen}
+                onClose={handleCloseQuickView}
+                isInCart={isInCart}
+                onAddToCart={addToCart}
+            />
         </section>
     )
 }
