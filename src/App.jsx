@@ -1,27 +1,35 @@
-import { Link } from "react-router";
-import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useState, useMemo } from "react";
 import { sanitizeInput, isValidEmail } from "./utils/validation";
+import { useProducts } from "./hooks/useProducts";
+import { useCart } from "./hooks/useCart";
+import Header from "./components/Header/Header";
+import QuickViewModal from "./components/QuickViewModal/QuickViewModal";
 import classes from "./App.module.scss";
 
-const featureImages = {
-    fastDelivery: "https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?w=400&h=300&fit=crop&crop=center",
-    quality: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop&crop=center",
-    security: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=300&fit=crop&crop=center",
-    support: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=300&fit=crop&crop=center",
-    pricing: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=300&fit=crop&crop=center",
-    returns: "https://images.unsplash.com/photo-1580048915913-4f8f5cb481c4?w=400&h=300&fit=crop&crop=center"
+const categoryImages = {
+    "electronics": "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=600&h=400&fit=crop&crop=center",
+    "jewelery": "https://images.unsplash.com/photo-1611596510844-cb5d39674643?w=600&h=400&fit=crop&crop=center",
+    "men's clothing": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&h=400&fit=crop&crop=center",
+    "women's clothing": "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=400&fit=crop&crop=center"
 };
 
-const dealImages = {
-    electronics: "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=300&h=200&fit=crop",
-    beauty: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=300&h=200&fit=crop",
-    shipping: "https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=300&h=200&fit=crop",
-    flash: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=300&h=200&fit=crop"
+const categoryDescriptions = {
+    "electronics": "Latest gadgets and tech essentials for modern living",
+    "jewelery": "Elegant accessories and timeless pieces for every style",
+    "men's clothing": "Contemporary fashion and essentials for the modern man",
+    "women's clothing": "Trendy styles and classic pieces for every woman"
 };
 
 function App() {
     const [email, setEmail] = useState("");
     const [subscribed, setSubscribed] = useState(false);
+    const [quickViewProduct, setQuickViewProduct] = useState(null);
+    const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
+
+    const API_URL = import.meta.env.VITE_API_URL || 'https://fakestoreapi.com/products';
+    const { products, loading, error } = useProducts(API_URL);
+    const { cartItemsCount, isInCart, addToCart } = useCart();
 
     const handleNewsletterSubmit = (e) => {
         e.preventDefault();
@@ -33,207 +41,278 @@ function App() {
         }
     };
 
-    return (
-        <div className={classes.homePage} >
-            {/* Trust Bar */}
-            <div className={classes.trustBar}>
-                <div className={classes.trustContent}>
-                    <div className={classes.trustItem}>
-                        <span className={classes.trustIcon}>🏆</span>
-                        <span className={classes.trustText}>Industry Leading</span>
-                    </div>
-                    <div className={classes.trustItem}>
-                        <span className={classes.trustIcon}>🔒</span>
-                        <span className={classes.trustText}>100% Secure</span>
-                    </div>
-                    <div className={classes.trustItem}>
-                        <span className={classes.trustIcon}>🚚</span>
-                        <span className={classes.trustText}>Free Returns</span>
-                    </div>
-                    <div className={classes.trustItem}>
-                        <span className={classes.trustIcon}>⭐</span>
-                        <span className={classes.trustText}>4.8/5 Rating</span>
-                    </div>
-                </div>
-            </div>
+    const handleQuickView = (product) => {
+        setQuickViewProduct(product);
+        setIsQuickViewOpen(true);
+    };
 
+    const handleCloseQuickView = () => {
+        setIsQuickViewOpen(false);
+        setTimeout(() => setQuickViewProduct(null), 300);
+    };
+
+    // Group products by category
+    const productsByCategory = useMemo(() => {
+        if (!products.length) return {};
+        
+        const grouped = {};
+        products.forEach(product => {
+            if (!grouped[product.category]) {
+                grouped[product.category] = [];
+            }
+            grouped[product.category].push(product);
+        });
+        
+        // Get top 3 products from each category
+        Object.keys(grouped).forEach(category => {
+            grouped[category] = grouped[category]
+                .sort((a, b) => (b.rating?.rate || 0) - (a.rating?.rate || 0))
+                .slice(0, 3);
+        });
+        
+        return grouped;
+    }, [products]);
+
+    const categories = Object.keys(productsByCategory);
+
+    if (loading) return (
+        <div className={classes.loadingContainer}>
+            <div className={classes.loadingSpinner}></div>
+            <p>Loading amazing products...</p>
+        </div>
+    );
+
+    if (error) return (
+        <div className={classes.errorContainer}>
+            <h2>Something went wrong</h2>
+            <p>{error}</p>
+            <button onClick={() => window.location.reload()}>Try Again</button>
+        </div>
+    );
+
+    return (
+        <div className={classes.homePage}>
+            <Header cartItemsCount={cartItemsCount} />
+            
             {/* Hero Section */}
             <section className={classes.hero}>
-                <h1 className={classes.title}>
-                    eesto Shoppers
-                </h1>
-                <p className={classes.subtitle}>
-                    Discover premium products with unbeatable quality and prices. 
-                    Your trusted destination for curated shopping excellence.
-                </p>
-                <Link to="shop" className={classes.ctaButton}>
-                    Shop Now
-                </Link>
+                <div className={classes.heroContent}>
+                    <h1 className={classes.title}>
+                        Discover Amazing Products
+                    </h1>
+                    <p className={classes.subtitle}>
+                        Shop our curated collection of premium items across multiple categories
+                    </p>
+                    <div className={classes.heroStats}>
+                        <div className={classes.stat}>
+                            <span className={classes.statNumber}>{products.length}+</span>
+                            <span className={classes.statLabel}>Products</span>
+                        </div>
+                        <div className={classes.stat}>
+                            <span className={classes.statNumber}>{categories.length}</span>
+                            <span className={classes.statLabel}>Categories</span>
+                        </div>
+                        <div className={classes.stat}>
+                            <span className={classes.statNumber}>4.8★</span>
+                            <span className={classes.statLabel}>Rating</span>
+                        </div>
+                    </div>
+                </div>
             </section>
 
-            {/* Special Offers Banner */}
-            <section className={classes.dealsSection}>
-                <div className={classes.dealsContainer}>
-                    <div className={classes.dealsBadge}>
-                        <span className={classes.badgeText}>SPECIAL OFFERS</span>
-                    </div>
-                    <h2 className={classes.dealsTitle}>
-                        Curated Deals Just For You
-                    </h2>
-                    <p className={classes.dealsSubtitle}>
-                        Premium products selected by our shopping experts
-                    </p>
+            {/* Categories with Products */}
+            <section className={classes.categoriesSection}>
+                <div className={classes.sectionHeader}>
+                    <h2 className={classes.sectionTitle}>Shop by Category</h2>
+                    <Link to="/shop" className={classes.viewAllLink}>
+                        View All Products →
+                    </Link>
                 </div>
-                <div className={classes.countdown}>
-                    <span className={classes.countdownText}>
-                        ⏰ Limited Time: Flash Sale Ends In
-                    </span>
-                    <div className={classes.countdownTimer}>
-                        <div className={classes.timeBlock}>
-                            <span className={classes.timeNumber}>02</span>
-                            <span className={classes.timeLabel}>Hours</span>
+
+                {categories.map((category) => (
+                    <div key={category} className={classes.categorySection}>
+                        <div className={classes.categoryHeader}>
+                            <div className={styles.categoryInfo}>
+                                <h3 className={classes.categoryName}>
+                                    {category.charAt(0).toUpperCase() + category.slice(1)}
+                                </h3>
+                                <p className={classes.categoryDescription}>
+                                    {categoryDescriptions[category] || `Explore our ${category} collection`}
+                                </p>
+                            </div>
+                            <Link 
+                                to={`/shop?category=${encodeURIComponent(category)}`} 
+                                className={classes.categoryLink}
+                            >
+                                Shop {category.charAt(0).toUpperCase() + category.slice(1)} →
+                            </Link>
                         </div>
-                        <span className={classes.timeSeparator}>:</span>
-                        <div className={classes.timeBlock}>
-                            <span className={classes.timeNumber}>30</span>
-                            <span className={classes.timeLabel}>Mins</span>
+
+                        {/* Category Banner */}
+                        <div className={classes.categoryBanner}>
+                            <img 
+                                src={categoryImages[category] || "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=300&fit=crop&crop=center"}
+                                alt={category}
+                                className={classes.categoryImage}
+                            />
+                            <div className={classes.categoryOverlay}>
+                                <h4>{category.charAt(0).toUpperCase() + category.slice(1)}</h4>
+                                <p>{productsByCategory[category].length} products available</p>
+                            </div>
                         </div>
-                        <span className={classes.timeSeparator}>:</span>
-                        <div className={classes.timeBlock}>
-                            <span className={classes.timeNumber}>45</span>
-                            <span className={classes.timeLabel}>Secs</span>
+
+                        {/* Products Grid */}
+                        <div className={classes.productsGrid}>
+                            {productsByCategory[category].map((product) => (
+                                <div key={product.id} className={classes.productCard}>
+                                    {product.discount > 0 && (
+                                        <div className={classes.discountBadge}>
+                                            -{product.discount}%
+                                        </div>
+                                    )}
+                                    
+                                    <div className={classes.productImage}>
+                                        <img 
+                                            src={product.image} 
+                                            alt={product.title} 
+                                            loading="lazy"
+                                        />
+                                        <div className={classes.productOverlay}>
+                                            <button 
+                                                className={classes.quickViewBtn}
+                                                onClick={() => handleQuickView(product)}
+                                            >
+                                                Quick View
+                                            </button>
+                                            <button 
+                                                className={classes.addToCartBtn}
+                                                onClick={() => addToCart(product)}
+                                                disabled={isInCart(product.id)}
+                                            >
+                                                {isInCart(product.id) ? 'In Cart' : 'Add to Cart'}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className={classes.productContent}>
+                                        <h4 className={classes.productTitle}>{product.title}</h4>
+                                        
+                                        <div className={classes.productRating}>
+                                            <span className={classes.stars}>
+                                                {'★'.repeat(Math.floor(product.rating?.rate || 4))}
+                                                {'☆'.repeat(5 - Math.floor(product.rating?.rate || 4))}
+                                            </span>
+                                            <span className={classes.ratingCount}>
+                                                ({product.rating?.count || 50})
+                                            </span>
+                                        </div>
+                                        
+                                        <div className={classes.productPrice}>
+                                            <span>
+                                                {product.discount > 0 && (
+                                                    <span className={classes.originalPrice}>
+                                                        ${product.price}
+                                                    </span>
+                                                )}
+                                                ${((product.price * (100 - product.discount)) / 100).toFixed(2)}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
-                </div>
+                ))}
             </section>
 
             {/* Features Section */}
-            <section className={classes.features}>
-                <h2 className={classes.sectionTitle}>Why Choose eesto?</h2>
+            <section className={classes.featuresSection}>
+                <h2 className={classes.sectionTitle}>Why Shop With Us?</h2>
                 <div className={classes.featuresGrid}>
                     <div className={classes.featureCard}>
-                        <div className={classes.featureImage}>
-                            <img src={featureImages.fastDelivery} alt="Fast Delivery - Delivery truck and packages" />
-                        </div>
-                        <h3 className={classes.featureTitle}>Fast Delivery</h3>
-                        <p className={classes.featureDescription}>
-                            Get your orders delivered quickly with our express shipping options. 
-                            Free delivery on orders over $50.
-                        </p>
+                        <div className={classes.featureIcon}>🚚</div>
+                        <h3>Fast Delivery</h3>
+                        <p>Free shipping on orders over $50</p>
                     </div>
                     <div className={classes.featureCard}>
-                        <div className={classes.featureImage}>
-                            <img src={featureImages.quality} alt="Quality Products - Premium items showcase" />
-                        </div>
-                        <h3 className={classes.featureTitle}>Top Quality</h3>
-                        <p className={classes.featureDescription}>
-                            All products are carefully curated and tested for quality. 
-                            100% satisfaction guaranteed or your money back.
-                        </p>
+                        <div className={classes.featureIcon}>💎</div>
+                        <h3>Premium Quality</h3>
+                        <p>Curated products you can trust</p>
                     </div>
                     <div className={classes.featureCard}>
-                        <div className={classes.featureImage}>
-                            <img src={featureImages.security} alt="Secure Shopping - Protected payment and data" />
-                        </div>
-                        <h3 className={classes.featureTitle}>Secure Shopping</h3>
-                        <p className={classes.featureDescription}>
-                            Shop with confidence using our secure payment system. 
-                            Your personal information is always protected.
-                        </p>
+                        <div className={classes.featureIcon}>🔒</div>
+                        <h3>Secure Shopping</h3>
+                        <p>100% secure payment processing</p>
                     </div>
                     <div className={classes.featureCard}>
-                        <div className={classes.featureImage}>
-                            <img src={featureImages.support} alt="24/7 Customer Support - Friendly support team" />
-                        </div>
-                        <h3 className={classes.featureTitle}>24/7 Support</h3>
-                        <p className={classes.featureDescription}>
-                            Our friendly customer support team is available around the clock 
-                            to help with any questions or concerns.
-                        </p>
-                    </div>
-                    <div className={classes.featureCard}>
-                        <div className={classes.featureImage}>
-                            <img src={featureImages.pricing} alt="Best Prices - Competitive pricing and savings" />
-                        </div>
-                        <h3 className={classes.featureTitle}>Best Prices</h3>
-                        <p className={classes.featureDescription}>
-                            Competitive prices with regular sales and discounts. 
-                            Price match guarantee on identical items.
-                        </p>
-                    </div>
-                    <div className={classes.featureCard}>
-                        <div className={classes.featureImage}>
-                            <img src={featureImages.returns} alt="Easy Returns - Hassle-free return process" />
-                        </div>
-                        <h3 className={classes.featureTitle}>Easy Returns</h3>
-                        <p className={classes.featureDescription}>
-                            Hassle-free returns within 30 days. No questions asked 
-                            return policy for your peace of mind.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            {/* Stats Section */}
-            <section className={classes.stats}>
-                <div className={classes.statsGrid}>
-                    <div className={classes.statItem}>
-                        <span className={classes.statNumber}>20K+</span>
-                        <span className={classes.statLabel}>Happy Customers</span>
-                    </div>
-                    <div className={classes.statItem}>
-                        <span className={classes.statNumber}>1000+</span>
-                        <span className={classes.statLabel}>Products</span>
-                    </div>
-                    <div className={classes.statItem}>
-                        <span className={classes.statNumber}>99.9%</span>
-                        <span className={classes.statLabel}>Uptime</span>
-                    </div>
-                    <div className={classes.statItem}>
-                        <span className={classes.statNumber}>24/7</span>
-                        <span className={classes.statLabel}>Support</span>
+                        <div className={classes.featureIcon}>↩️</div>
+                        <h3>Easy Returns</h3>
+                        <p>30-day hassle-free returns</p>
                     </div>
                 </div>
             </section>
 
             {/* Newsletter Section */}
             <section className={classes.newsletter}>
-                <h2 className={classes.newsletterTitle}>Stay Updated</h2>
-                <p className={classes.newsletterDescription}>
-                    Subscribe to our newsletter and be the first to know about new products, 
-                    exclusive deals, and special offers.
-                </p>
-                <form className={classes.newsletterForm} onSubmit={handleNewsletterSubmit}>
-                    <input
-                        type="email"
-                        placeholder="Enter your email address"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className={classes.emailInput}
-                        required
-                    />
-                    <button type="submit" className={classes.subscribeButton}>
-                        {subscribed ? "✅ Subscribed!" : "Subscribe"}
-                    </button>
-                </form>
+                <div className={classes.newsletterContent}>
+                    <h2 className={classes.newsletterTitle}>Stay in the Loop</h2>
+                    <p className={classes.newsletterDescription}>
+                        Get exclusive offers and be the first to know about new arrivals
+                    </p>
+                    <form className={classes.newsletterForm} onSubmit={handleNewsletterSubmit}>
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className={classes.emailInput}
+                            required
+                        />
+                        <button type="submit" className={classes.subscribeButton}>
+                            {subscribed ? "✅ Subscribed!" : "Subscribe"}
+                        </button>
+                    </form>
+                </div>
             </section>
 
             {/* Footer */}
             <footer className={classes.footer}>
                 <div className={classes.footerContent}>
-                    <div className={classes.footerLinks}>
-                        <Link to="/shop">Shop</Link>
-                        <Link to="/cart">Cart</Link>
-                        <a href="#about">About Us</a>
-                        <a href="#contact">Contact</a>
-                        <a href="#privacy">Privacy Policy</a>
-                        <a href="#terms">Terms of Service</a>
+                    <div className={classes.footerSection}>
+                        <h4>eesto Shoppers</h4>
+                        <p>Your trusted destination for quality products</p>
                     </div>
-                    <p className={classes.copyright}>
-                        © 2025 sarmah. All rights reserved. Made with ❤️ for amazing shoppers.
-                    </p>
+                    <div className={classes.footerLinks}>
+                        <div className={classes.footerColumn}>
+                            <h5>Shop</h5>
+                            <Link to="/shop">All Products</Link>
+                            <Link to="/cart">Cart</Link>
+                        </div>
+                        <div className={styles.footerColumn}>
+                            <h5>Account</h5>
+                            <Link to="/login">Login</Link>
+                            <Link to="/profile">Profile</Link>
+                        </div>
+                        <div className={styles.footerColumn}>
+                            <h5>Support</h5>
+                            <a href="#contact">Contact Us</a>
+                            <a href="#returns">Returns</a>
+                        </div>
+                    </div>
+                </div>
+                <div className={classes.footerBottom}>
+                    <p>© 2026 eesto Shoppers. All rights reserved.</p>
                 </div>
             </footer>
+
+            {/* Quick View Modal */}
+            <QuickViewModal
+                product={quickViewProduct}
+                isOpen={isQuickViewOpen}
+                onClose={handleCloseQuickView}
+                isInCart={isInCart}
+                onAddToCart={addToCart}
+            />
         </div>
     )
 }
