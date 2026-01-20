@@ -132,7 +132,7 @@ function App() {
                 {categories.map((category) => (
                     <div key={category} className={classes.categorySection}>
                         <div className={classes.categoryHeader}>
-                            <div className={styles.categoryInfo}>
+                            <div className={classes.categoryInfo}>
                                 <h3 className={classes.categoryName}>
                                     {category.charAt(0).toUpperCase() + category.slice(1)}
                                 </h3>
@@ -288,12 +288,12 @@ function App() {
                             <Link to="/shop">All Products</Link>
                             <Link to="/cart">Cart</Link>
                         </div>
-                        <div className={styles.footerColumn}>
+                        <div className={classes.footerColumn}>
                             <h5>Account</h5>
                             <Link to="/login">Login</Link>
                             <Link to="/profile">Profile</Link>
                         </div>
-                        <div className={styles.footerColumn}>
+                        <div className={classes.footerColumn}>
                             <h5>Support</h5>
                             <a href="#contact">Contact Us</a>
                             <a href="#returns">Returns</a>
