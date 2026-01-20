@@ -1,6 +1,6 @@
 import { StrictMode, lazy, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router'
 import Lenis from '@studio-freight/lenis'
 import Loader from './components/Loader/Loader.jsx'
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.jsx'

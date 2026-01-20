@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { useState, useMemo } from "react";
 import { sanitizeInput, isValidEmail } from "./utils/validation.js";
 import { useProducts } from "./hooks/useProducts";
