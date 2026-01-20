@@ -12,7 +12,7 @@ function CartWidget( { productsCount }) {
     }
 
     return (
-        <button className={classes.container} onClick={navigateToCart}>
+        <button className={`${classes.container} ${productsCount > 0 ? classes.hasItems : ''}`} onClick={navigateToCart}>
             <span className={classes.productsCount}>{productsCount}</span>
             <img src={shoppingCart} className={classes.shoppingCart} alt="Go to the cart" />
         </button>
