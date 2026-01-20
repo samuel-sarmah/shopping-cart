@@ -86,7 +86,7 @@ const ProductCard = memo(({ product, isInCart, onAddToCart }) => {
                     disabled={isInCart(product.id)}
                     aria-label={`Add ${product.title} to cart`}
                 >
-                    {isInCart(product.id) ? '' : 'Add to Cart'}
+                    {isInCart(product.id) ? 'In Cart' : 'Add to Cart'}
                 </button>
             </div>
         </article>
