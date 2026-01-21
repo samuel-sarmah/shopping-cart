@@ -14,7 +14,7 @@
     color: #7f8c8d;
     
     a {
-        color: #667eea;
+        color: #0d9488;
         text-decoration: none;
         
         &:hover {
@@ -91,12 +91,12 @@
             }
             
             &:hover {
-                border-color: #667eea;
+                border-color: #0d9488;
             }
             
             &.active {
-                border-color: #667eea;
-                box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+                border-color: #0d9488;
+                box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.2);
             }
         }
     }
@@ -304,7 +304,7 @@
         
         .addToCartButton {
             flex: 2;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
             color: white;
             border: none;
             padding: 16px 24px;
@@ -316,7 +316,7 @@
             
             &:hover:not(:disabled) {
                 transform: translateY(-2px);
-                box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+                box-shadow: 0 8px 25px rgba(13, 148, 136, 0.3);
             }
             
             &:disabled {
@@ -421,7 +421,7 @@
         }
         
         .writeReviewButton {
-            background: #667eea;
+            background: #0d9488;
             color: white;
             border: none;
             padding: 12px 24px;
@@ -431,7 +431,7 @@
             transition: all 0.3s ease;
             
             &:hover {
-                background: #5a6fd8;
+                background: #0f766e;
             }
         }
     }
@@ -540,7 +540,7 @@
                 
                 .viewProductButton {
                     display: block;
-                    background: #667eea;
+                    background: #0d9488;
                     color: white;
                     text-decoration: none;
                     text-align: center;
@@ -550,7 +550,7 @@
                     transition: all 0.3s ease;
                     
                     &:hover {
-                        background: #5a6fd8;
+                        background: #0f766e;
                     }
                 }
             }

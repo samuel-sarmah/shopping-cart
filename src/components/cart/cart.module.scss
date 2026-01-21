@@ -82,7 +82,7 @@
                 }
 
                 .qty, .qtyRmv {
-                    background-color: #646cff;
+                    background-color: #0d9488;
                     color: white;
                     border: none;
                     border-radius: 6px;
@@ -99,7 +99,7 @@
 
                     &:hover {
                         transform: scale(1.1);
-                        box-shadow: 0 2px 8px rgba(100, 108, 255, 0.3);
+                        box-shadow: 0 2px 8px rgba(13, 148, 136, 0.3);
                     }
 
                     &:active {
@@ -168,11 +168,11 @@
             }
 
             .back {
-                background-color: #646cff;
+                background-color: #0d9488;
 
                 &:hover {
-                    background-color: #535bf2;
-                    box-shadow: 0 4px 12px rgba(100, 108, 255, 0.3);
+                    background-color: #0f766e;
+                    box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
                 }
             }
 

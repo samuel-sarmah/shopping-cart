@@ -58,9 +58,9 @@
         }
         
         &.active {
-            background: #667eea;
+            background: #0d9488;
             color: white;
-            border-left: 4px solid #764ba2;
+            border-left: 4px solid #14b8a6;
         }
     }
     
@@ -225,7 +225,7 @@
             
             &:hover {
                 background: #f8f9fa;
-                border-color: #667eea;
+                border-color: #0d9488;
             }
         }
         
@@ -367,11 +367,11 @@
             transition: all 0.3s ease;
             
             &:not(.delete) {
-                background: #667eea;
+                background: #0d9488;
                 color: white;
                 
                 &:hover {
-                    background: #5a6fd8;
+                    background: #0f766e;
                 }
             }
             
@@ -446,13 +446,13 @@
             
             &:focus {
                 outline: none;
-                border-color: #667eea;
+                border-color: #0d9488;
             }
         }
     }
     
     .saveButton {
-        background: #667eea;
+        background: #0d9488;
         color: white;
         border: none;
         padding: 12px 24px;
@@ -462,7 +462,7 @@
         transition: all 0.3s ease;
         
         &:hover {
-            background: #5a6fd8;
+            background: #0f766e;
             transform: translateY(-2px);
         }
     }

@@ -22,7 +22,7 @@
         
         .backToStore {
             display: block;
-            color: #667eea;
+            color: #0d9488;
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
@@ -66,9 +66,9 @@
         }
         
         &.active {
-            background: #667eea;
+            background: #0d9488;
             color: white;
-            border-left: 4px solid #764ba2;
+            border-left: 4px solid #14b8a6;
         }
     }
     
@@ -120,7 +120,7 @@
     .avatar {
         width: 80px;
         height: 80px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -165,7 +165,7 @@
     }
     
     .editButton {
-        background: #667eea;
+        background: #0d9488;
         color: white;
         border: none;
         padding: 10px 20px;
@@ -175,7 +175,7 @@
         transition: all 0.3s ease;
         
         &:hover {
-            background: #5a6fd8;
+            background: #0f766e;
             transform: translateY(-2px);
         }
     }
@@ -226,7 +226,7 @@
             
             &:focus {
                 outline: none;
-                border-color: #667eea;
+                border-color: #0d9488;
             }
             
             &:disabled {
@@ -343,7 +343,7 @@
     }
     
     .viewOrderButton {
-        background: #667eea;
+        background: #0d9488;
         color: white;
         border: none;
         padding: 8px 16px;
@@ -354,7 +354,7 @@
         transition: all 0.3s ease;
         
         &:hover {
-            background: #5a6fd8;
+            background: #0f766e;
         }
     }
 }
@@ -401,10 +401,7 @@
         .wishlistPrice {
             font-size: 18px;
             font-weight: 700;
-            color: #667eea;
-            margin: 0 0 16px 0;
-        }
-        
+                color: #0d9488;
         .addToCartButton {
             background: #27ae60;
             color: white;
@@ -549,7 +546,7 @@
         }
         
         input:checked + .slider {
-            background-color: #667eea;
+            background-color: #0d9488;
         }
         
         input:checked + .slider:before {

@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #134e4a 0%, #0f766e 50%, #14b8a6 100%);
     padding: 2rem;
     font-family: sans-serif;
 
@@ -31,7 +31,7 @@
             width: 80px;
             height: 80px;
             margin: 0 auto 1.5rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -60,7 +60,7 @@
 
         .infoBox {
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #0d9488;
             padding: 1.5rem;
             border-radius: 8px;
             margin: 2rem 0;
@@ -83,7 +83,7 @@
 
         .thanks {
             font-size: 1.05rem;
-            color: #667eea;
+            color: #0d9488;
             font-weight: 500;
             line-height: 1.6;
             margin: 0 0 2rem;
@@ -116,18 +116,18 @@
             }
 
             .primary {
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
                 color: white;
 
                 &:hover {
-                    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+                    box-shadow: 0 6px 20px rgba(13, 148, 136, 0.4);
                 }
             }
 
             .secondary {
                 background: white;
-                color: #667eea;
-                border: 2px solid #667eea;
+                color: #0d9488;
+                border: 2px solid #0d9488;
 
                 &:hover {
                     background: #f8f9fa;

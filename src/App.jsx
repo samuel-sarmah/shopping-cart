@@ -230,22 +230,43 @@ function App() {
                 <h2 className={classes.sectionTitle}>Why Shop With Us?</h2>
                 <div className={classes.featuresGrid}>
                     <div className={classes.featureCard}>
-                        <div className={classes.featureIcon}>🚚</div>
+                        <div className={classes.featureIcon}>
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                <rect x="1" y="3" width="15" height="13"></rect>
+                                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                                <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                                <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                            </svg>
+                        </div>
                         <h3>Fast Delivery</h3>
                         <p>Free shipping on orders over $50</p>
                     </div>
                     <div className={classes.featureCard}>
-                        <div className={classes.featureIcon}>💎</div>
+                        <div className={classes.featureIcon}>
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                        </div>
                         <h3>Premium Quality</h3>
                         <p>Curated products you can trust</p>
                     </div>
                     <div className={classes.featureCard}>
-                        <div className={classes.featureIcon}>🔒</div>
+                        <div className={classes.featureIcon}>
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </div>
                         <h3>Secure Shopping</h3>
                         <p>100% secure payment processing</p>
                     </div>
                     <div className={classes.featureCard}>
-                        <div className={classes.featureIcon}>↩️</div>
+                        <div className={classes.featureIcon}>
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                <polyline points="9 10 4 15 9 20"></polyline>
+                                <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
+                            </svg>
+                        </div>
                         <h3>Easy Returns</h3>
                         <p>30-day hassle-free returns</p>
                     </div>
@@ -269,7 +290,7 @@ function App() {
                             required
                         />
                         <button type="submit" className={classes.subscribeButton}>
-                            {subscribed ? "✅ Subscribed!" : "Subscribe"}
+                            {subscribed ? "Subscribed!" : "Subscribe"}
                         </button>
                     </form>
                 </div>

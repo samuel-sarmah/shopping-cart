@@ -5,10 +5,10 @@
   --primary-light: #34495e;
   --primary-dark: #1a252f;
   
-  /* Accent Colors */
-  --accent: #3498db;
-  --accent-hover: #2980b9;
-  --accent-light: #85C1E2;
+  /* Accent Colors - Teal/Emerald Theme */
+  --accent: #0d9488;
+  --accent-hover: #0f766e;
+  --accent-light: #14b8a6;
   
   /* Action Colors */
   --success: #27ae60;

@@ -1,6 +1,6 @@
 .loginPage {
     min-height: 100vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #134e4a 0%, #0f766e 50%, #14b8a6 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -32,7 +32,7 @@
 }
 
 .loginHeader {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #134e4a 0%, #0f766e 50%, #14b8a6 100%);
     color: white;
     padding: 40px 30px;
     text-align: center;
@@ -86,8 +86,8 @@
     
     &:focus {
         outline: none;
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        border-color: #0d9488;
+        box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
     }
     
     &.error {
@@ -157,19 +157,19 @@
 }
 
 .forgotLink {
-    color: #667eea;
+    color: #0d9488;
     text-decoration: none;
     font-weight: 600;
     
     &:hover {
-        color: #5a6fd8;
+        color: #0f766e;
         text-decoration: underline;
     }
 }
 
 .loginButton {
     width: 100%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
     color: white;
     border: none;
     padding: 14px 24px;
@@ -181,7 +181,7 @@
     
     &:hover:not(:disabled) {
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        box-shadow: 0 8px 25px rgba(13, 148, 136, 0.3);
     }
     
     &:disabled {
@@ -240,7 +240,7 @@
     transition: all 0.3s ease;
     
     &:hover {
-        border-color: #667eea;
+        border-color: #0d9488;
         background: #f8f9fa;
         color: #2c3e50;
     }
@@ -258,7 +258,7 @@
     color: #5d6d7e;
     
     a {
-        color: #667eea;
+        color: #0d9488;
         text-decoration: none;
         font-weight: 600;
         

@@ -278,7 +278,7 @@
 }
 
 .addToCartBtn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
     color: white;
     border: none;
     padding: 16px 24px;
@@ -291,7 +291,7 @@
 
     &:hover:not(:disabled) {
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        box-shadow: 0 8px 25px rgba(13, 148, 136, 0.3);
     }
 
     &:disabled {
@@ -304,8 +304,8 @@
 
 .viewDetailsBtn {
     background: transparent;
-    color: #667eea;
-    border: 2px solid #667eea;
+    color: #0d9488;
+    border: 2px solid #0d9488;
     padding: 14px 24px;
     border-radius: 8px;
     font-size: 14px;
@@ -316,7 +316,7 @@
     text-decoration: none;
 
     &:hover {
-        background: #667eea;
+        background: #0d9488;
         color: white;
         transform: translateY(-2px);
     }
