@@ -44,7 +44,7 @@
 
 // Hero Section
 .hero {
-  padding: 80px 20px 60px;
+  padding: 120px 20px 60px;
   background: linear-gradient(135deg, #134e4a 0%, #0f766e 50%, #14b8a6 100%);
   color: white;
   text-align: center;
@@ -547,7 +547,7 @@
 // Responsive Design
 @media (max-width: 768px) {
   .hero {
-    padding: 60px 20px 40px;
+    padding: 110px 20px 40px;
     
     .heroStats {
       gap: 40px;
@@ -613,7 +613,7 @@
 
 @media (max-width: 480px) {
   .hero {
-    padding: 40px 20px 30px;
+    padding: 100px 20px 30px;
     
     .heroStats {
       gap: 30px;
