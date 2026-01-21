@@ -34,7 +34,7 @@
                 &:focus {
                     outline: none;
                     border-color: var(--accent);
-                    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+                    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
                 }
 
                 &::placeholder {
@@ -231,17 +231,13 @@
                     &:hover:not(:disabled) {
                         background: var(--accent-hover);
                         transform: scale(1.02);
-                        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+                        box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
                     }
 
                     &:disabled {
                         background: var(--gray);
                         cursor: not-allowed;
                         transform: none;
-
-                        &::after {
-                            content: 'In Cart';
-                        }
                     }
 
                     &::before {
@@ -341,7 +337,7 @@
         &:hover {
             background: var(--accent-hover);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
         }
     }
 }
@@ -400,7 +396,7 @@
         &:hover {
             background: var(--accent-hover);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
         }
     }
 }

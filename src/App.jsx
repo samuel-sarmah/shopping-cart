@@ -5,11 +5,12 @@ import { useProducts } from "./hooks/useProducts";
 import { useCart } from "./hooks/useCart";
 import Header from "./components/Header/Header";
 import QuickViewModal from "./components/QuickViewModal/QuickViewModal";
+import Loader from "./components/Loader/Loader";
 import classes from "./App.module.scss";
 
 const categoryImages = {
     "electronics": "https://images.unsplash.com/photo-1498049794561-7780e7231661?w=600&h=400&fit=crop&crop=center",
-    "jewelery": "https://images.unsplash.com/photo-1611596510844-cb5d39674643?w=600&h=400&fit=crop&crop=center",
+    "jewelery": "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=600&h=400&fit=crop&crop=center",
     "men's clothing": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&h=400&fit=crop&crop=center",
     "women's clothing": "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&h=400&fit=crop&crop=center"
 };
@@ -75,12 +76,7 @@ function App() {
 
     const categories = Object.keys(productsByCategory);
 
-    if (loading) return (
-        <div className={classes.loadingContainer}>
-            <div className={classes.loadingSpinner}></div>
-            <p>Loading amazing products...</p>
-        </div>
-    );
+    if (loading) return <Loader message="Loading amazing products..." />;
 
     if (error) return (
         <div className={classes.errorContainer}>
